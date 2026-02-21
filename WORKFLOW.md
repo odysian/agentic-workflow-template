@@ -25,6 +25,7 @@ Core rule:
 - PRDs create Tasks.
 - PRs close Tasks.
 - PRDs close only when all child Tasks are done.
+- Default sizing is 1 PRD -> 1 Task -> 1 PR unless split criteria apply.
 - Quick-fix fast lane is allowed only when `ISSUES_WORKFLOW.md` criteria are met.
 
 For backend-coupled/Phase 3 work, all Decision Locks must be checked before implementation starts.
@@ -34,8 +35,8 @@ Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` a
 ## Planning and Scope
 
 - One issue at a time.
-- Keep Tasks PR-sized (target 1-4 hours).
-- If a Task is larger, split it before coding.
+- Default to one end-to-end Task per feature.
+- Split Tasks only when `ISSUES_WORKFLOW.md` split criteria apply.
 - Keep changes surgical.
 
 ## Verification

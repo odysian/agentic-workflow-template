@@ -14,12 +14,22 @@ This repository uses a PRD -> Task -> PR execution model.
 2. PRD -> Task -> PR is the default execution model.
 3. PRs close Task issues (`Closes #...`), not PRDs.
 4. PRDs are closed only when all linked Tasks are complete.
-5. Phase 3/backend-coupled work cannot start until PRD Decision Locks are checked.
-6. Tasks target 1-4 hours. If bigger, split before implementation.
+5. Default sizing rule: **1 PRD -> 1 Task -> 1 PR**.
+6. Tasks are PR-sized; in this workflow, PR-sized usually means end-to-end feature delivery.
+7. Phase 3/backend-coupled work cannot start until PRD Decision Locks are checked.
+
+## When to Split Into Multiple Tasks
+
+Split only when it clearly improves delivery or risk control:
+
+- change is too large for one PR (guideline: ~600+ LOC or hard to review)
+- backend contract should land before frontend integration
+- migrations or realtime contract changes increase risk
+- parallel work or staged rollout is needed
 
 ## Fast Lane (Quick Fix Flexibility)
 
-For personal projects or low-risk maintenance, a direct quick-fix path is allowed without mandatory PRD/PR when all are true:
+For low-risk maintenance, a direct quick-fix path can be allowed (if project policy allows) without mandatory PRD/PR when all are true:
 
 - the change is a single logical fix
 - no schema/API/realtime contract change
@@ -31,12 +41,13 @@ When using Fast Lane:
 
 - run relevant verification
 - use a clear quick-fix commit message
-- direct push to main is allowed for personal workflows
 - if scope grows, switch back to PRD -> Task -> PR
 
 ## Decision Records and ADRs
 
-Use Decision issues/checkboxes for short-term locking.
+Use PRD checkbox locks by default.
+
+Use a separate Decision issue only for non-trivial or cross-PRD discussion.
 
 If a decision has lasting architecture, security, or performance impact:
 
@@ -48,11 +59,10 @@ If a decision has lasting architecture, security, or performance impact:
 
 A Task is ready when:
 
-- scope is clear and bounded
 - acceptance criteria are explicit
 - verification commands are listed
-- dependencies are resolved
-- for Phase 3/backend-coupled work: PRD Decision Locks are all checked
+- dependencies/links are included
+- for Phase 3/backend-coupled work: PRD Decision Locks are checked
 
 ## Definition of Done
 
@@ -60,8 +70,7 @@ A Task is done when:
 
 - PR is merged
 - verification commands pass
-- tests are added/updated where needed
-- documentation is updated where needed
+- tests and docs for the feature are included in the same Task by default
 - follow-up issues are created for deferred work
 
 ## Verification Template
@@ -77,7 +86,7 @@ Use project commands:
 If using Codex in VS Code with GitHub CLI, follow `skills/prd-workflow-gh.md` for the end-to-end flow:
 
 - PRD draft
-- 6-8 PR-sized Task issue bodies
+- one default end-to-end Task issue body (optional splits only when criteria apply)
 - `gh issue create` command generation
 - optional Task execution and PR creation
 
@@ -85,7 +94,7 @@ If using Codex in VS Code with GitHub CLI, follow `skills/prd-workflow-gh.md` fo
 
 ```bash
 gh issue create --title "PRD: <feature>" --label "type:prd" --body-file prd-<feature>.md
-gh issue create --title "Task: <task title>" --label "type:task,area:frontend" --body-file task-<feature>-01.md
+gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file task-<feature>-01.md
 gh issue list --label type:task
 gh issue view <id>
 ```
