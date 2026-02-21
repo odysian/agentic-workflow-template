@@ -10,11 +10,10 @@
 
 Every feature follows:
 
-1. Design
-2. Test
+1. Whiteboard
+2. Document
 3. Implement
-4. Review
-5. Document
+4. Finalize
 
 ## Issues Workflow (Control Plane)
 
@@ -22,13 +21,12 @@ Read `ISSUES_WORKFLOW.md` before implementation.
 
 Core rule:
 
-- PRDs create Tasks.
+- GitHub issues are the execution source of truth.
+- Choose execution mode: `single` (default), `gated` (PRD + Tasks), or `fast` (tiny low-risk fixes).
+- Default sizing is 1 feature -> 1 Task -> 1 PR unless split criteria apply.
 - PRs close Tasks.
-- PRDs close only when all child Tasks are done.
-- Default sizing is 1 PRD -> 1 Task -> 1 PR unless split criteria apply.
-- Quick-fix fast lane is allowed only when `ISSUES_WORKFLOW.md` criteria are met.
-
-For backend-coupled/Phase 3 work, all Decision Locks must be checked before implementation starts.
+- PRDs close only when all child Tasks are done or deferred.
+- Backend-coupled work must have Decision Locks checked before implementation.
 
 Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` and are mandatory gates.
 

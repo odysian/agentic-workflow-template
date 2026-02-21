@@ -19,26 +19,27 @@ Read in this order:
 ## Unit of Work Rule
 
 - **Unit of work is a GitHub Issue.**
-- Convert freeform requests into (default path):
-  - PRD issue (new features or multi-step work)
-  - Task issue (PR-sized implementation work)
+- Choose an execution mode from `ISSUES_WORKFLOW.md` before coding:
+  - `single` (default): one feature -> one Task issue -> one PR
+  - `gated`: PRD issue + child Task issue(s) for feature sets or higher-risk work
+  - `fast`: quick-fix path for tiny low-risk changes (if project policy allows)
+- Convert freeform requests into the selected issue mode before implementation.
 - Work one Task issue at a time.
 - PRs close Task issues (`Closes #123`), not PRDs.
-- PRDs close only when all child Tasks are done.
-- Quick-fix fast lane is allowed for tiny low-risk changes; use the criteria in `ISSUES_WORKFLOW.md`.
+- PRDs close only when all child Tasks are done or explicitly deferred.
 - Detailed control-plane rules are canonical in `ISSUES_WORKFLOW.md`.
-- For one-shot PRD + Task + `gh` issue command generation, use `skills/prd-workflow-gh.md`.
+- For one-shot issue body + `gh` command generation, use `skills/prd-workflow-gh.md`.
 
 ## Agent Operating Loop
 
-1. Choose execution path: default issue flow or quick-fix fast lane.
-2. Restate goal and acceptance criteria.
-3. Plan minimal files and scope.
-4. Implement with tight, surgical changes.
-5. Run verification commands.
-6. Update tests/docs if required.
-7. If using issue flow, open PR that closes the Task issue.
-8. Move status forward (Ready -> In Progress -> Review -> Done) when using issue flow.
+1. Whiteboard scope in `plans/*.md` or spec docs (scratch only).
+2. Choose execution mode (`single` default, `gated`, or `fast`) and create required issue(s).
+3. Restate goal and acceptance criteria.
+4. Plan minimal files and scope.
+5. Implement with tight, surgical changes.
+6. Run verification commands.
+7. Update tests/docs if required.
+8. Open PR that closes the Task issue; close PRD after child Tasks are done/deferred.
 
 ## Project Context
 
@@ -54,15 +55,6 @@ Read in this order:
 - Do not install dependencies without approval.
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
-
-## Unit of Work
-
-When working agentically, the GitHub issue is the unit of work.
-
-- Follow issue templates.
-- Keep one issue per PR.
-- Keep scope tight.
-- `TASKS.md` (if present) is scratchpad only and not source of truth.
 
 ## Workflow Order
 

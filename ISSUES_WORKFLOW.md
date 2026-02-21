@@ -1,35 +1,50 @@
 # Issues Workflow
 
-This repository uses a PRD -> Task -> PR execution model.
+This repository uses GitHub issues as the execution control plane.
+
+## Workflow Loop
+
+1. Whiteboard feature ideas in `plans/*.md` or spec docs (scratch planning).
+2. Document work as issues using one of the execution modes below.
+3. Implement and close Task issues via PRs (`Closes #...`).
+4. Finalize by updating required docs and closing related PRD/tracker issues.
 
 ## Objects
 
-- **PRD** (`type:prd`): feature spec, decision locks, acceptance criteria, and verification plan.
-- **Task** (`type:task`): PR-sized unit of work.
+- **Task** (`type:task`): PR-sized implementation unit and default feature issue.
+- **PRD** (`type:prd`): feature-set/spec umbrella with decision locks and child Task links.
 - **Decision** (`type:decision`): short-term decision lock with rationale.
 
 ## Control Plane Rules
 
-1. GitHub Issues are the default source of truth for execution. `TASKS.md` (if present) remains scratchpad only.
-2. PRD -> Task -> PR is the default execution model.
+1. GitHub Issues are the source of truth for execution. `TASKS.md` (if present) is scratchpad only.
+2. The default execution path is **1 feature -> 1 Task -> 1 PR**.
 3. PRs close Task issues (`Closes #...`), not PRDs.
-4. PRDs are closed only when all linked Tasks are complete.
-5. Default sizing rule: **1 PRD -> 1 Task -> 1 PR**.
-6. Tasks are PR-sized; in this workflow, PR-sized usually means end-to-end feature delivery.
-7. Phase 3/backend-coupled work cannot start until PRD Decision Locks are checked.
+4. PRDs close only when all child Tasks are done or explicitly deferred.
+5. Tasks are PR-sized; in this workflow PR-sized usually means end-to-end feature delivery.
+6. Backend-coupled work requires Decision Locks checked before implementation begins.
 
-## When to Split Into Multiple Tasks
+## Execution Modes (Choose Before Opening Issues)
 
-Split only when it clearly improves delivery or risk control:
+### `single` (Default)
 
-- change is too large for one PR (guideline: ~600+ LOC or hard to review)
-- backend contract should land before frontend integration
-- migrations or realtime contract changes increase risk
-- parallel work or staged rollout is needed
+Use one Task issue per feature, then one PR that closes it.
 
-## Fast Lane (Quick Fix Flexibility)
+- Best for most feature work.
+- Task includes mini-PRD content: summary/scope/acceptance criteria/verification.
+- Decision Locks live in the Task for backend-coupled work.
 
-For low-risk maintenance, a direct quick-fix path can be allowed (if project policy allows) without mandatory PRD/PR when all are true:
+### `gated` (PRD + Tasks)
+
+Use one PRD issue plus child Task issue(s).
+
+- Use when working a feature set or higher-risk work.
+- Decision Locks live in the PRD.
+- Child Tasks should stay PR-sized (default one Task per feature).
+
+### `fast` (Quick Fix)
+
+For low-risk maintenance, a direct quick-fix path can be allowed (if project policy allows) without mandatory issue creation when all are true:
 
 - the change is a single logical fix
 - no schema/API/realtime contract change
@@ -41,19 +56,17 @@ When using Fast Lane:
 
 - run relevant verification
 - use a clear quick-fix commit message
-- if scope grows, switch back to PRD -> Task -> PR
+- follow the repo's branch/merge policy
+- if scope grows, switch to `single` or `gated`
 
-## Decision Records and ADRs
+## When to Split Into Multiple Tasks
 
-Use PRD checkbox locks by default.
+Split only when it clearly improves delivery or risk control:
 
-Use a separate Decision issue only for non-trivial or cross-PRD discussion.
-
-If a decision has lasting architecture, security, or performance impact:
-
-- create an ADR (`NNN-*.md`)
-- link it from the PRD
-- link it from the implementing PR
+- change is too large for one PR (guideline: ~600+ LOC or hard to review)
+- backend contract should land before frontend integration
+- migrations or realtime contract changes increase risk
+- parallel work or staged rollout is needed
 
 ## Definition of Ready
 
@@ -62,7 +75,7 @@ A Task is ready when:
 - acceptance criteria are explicit
 - verification commands are listed
 - dependencies/links are included
-- for Phase 3/backend-coupled work: PRD Decision Locks are checked
+- for backend-coupled work: Decision Locks are checked in the controlling issue (Task in `single`, PRD in `gated`)
 
 ## Definition of Done
 
@@ -72,6 +85,15 @@ A Task is done when:
 - verification commands pass
 - tests and docs for the feature are included in the same Task by default
 - follow-up issues are created for deferred work
+
+## Decision Records and ADRs
+
+- Default: Decision Locks live in the controlling issue (Task in `single`, PRD in `gated`).
+- Use a separate Decision issue only for non-trivial or cross-PRD discussion.
+- If a decision has lasting architecture/security/performance impact:
+  - create an ADR (`NNN-*.md`)
+  - link it from the PRD or Task
+  - link it from the implementing PR
 
 ## Verification Template
 
@@ -83,18 +105,17 @@ Use project commands:
 
 ## Codex + GitHub CLI Playbook
 
-If using Codex in VS Code with GitHub CLI, follow `skills/prd-workflow-gh.md` for the end-to-end flow:
+If using Codex in VS Code with GitHub CLI, follow `skills/prd-workflow-gh.md`.
 
-- PRD draft
-- one default end-to-end Task issue body (optional splits only when criteria apply)
-- `gh issue create` command generation
-- optional Task execution and PR creation
+- `mode=single` (default): generate one Task issue body + `gh issue create` command
+- `mode=gated`: generate PRD + Task issue body + commands
+- `mode=fast`: generate quick-fix checklist (no issue commands by default)
 
 ## Common GitHub CLI Commands
 
 ```bash
-gh issue create --title "PRD: <feature>" --label "type:prd" --body-file prd-<feature>.md
 gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file task-<feature>-01.md
+gh issue create --title "PRD: <feature set>" --label "type:prd" --body-file prd-<feature-set>.md
 gh issue list --label type:task
 gh issue view <id>
 ```
