@@ -25,6 +25,7 @@ Core rule:
 - PRDs create Tasks.
 - PRs close Tasks.
 - PRDs close only when all child Tasks are done.
+- Quick-fix fast lane is allowed only when `ISSUES_WORKFLOW.md` criteria are met.
 
 For backend-coupled/Phase 3 work, all Decision Locks must be checked before implementation starts.
 

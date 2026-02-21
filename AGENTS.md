@@ -1,5 +1,43 @@
 # AGENTS.md — {{PROJECT_NAME}}
 
+## Start Here (Canonical Entrypoint)
+
+`AGENTS.md` is the canonical entrypoint for agents and contributors in this repository.
+
+Read in this order:
+1. `AGENTS.md` (this file)
+2. `WORKFLOW.md`
+3. `ISSUES_WORKFLOW.md`
+4. `ARCHITECTURE.md` (if present)
+5. `PATTERNS.md` (if present)
+6. `REVIEW_CHECKLIST.md` (if present)
+7. `skills/write-prd.md` (if present)
+8. `skills/prd-to-issues.md` (if present)
+9. `skills/issue-to-pr.md` (if present)
+
+## Unit of Work Rule
+
+- **Unit of work is a GitHub Issue.**
+- Convert freeform requests into (default path):
+  - PRD issue (new features or multi-step work)
+  - Task issue (PR-sized implementation work)
+- Work one Task issue at a time.
+- PRs close Task issues (`Closes #123`), not PRDs.
+- PRDs close only when all child Tasks are done.
+- Quick-fix fast lane is allowed for tiny low-risk changes; use the criteria in `ISSUES_WORKFLOW.md`.
+- Detailed control-plane rules are canonical in `ISSUES_WORKFLOW.md`.
+
+## Agent Operating Loop
+
+1. Choose execution path: default issue flow or quick-fix fast lane.
+2. Restate goal and acceptance criteria.
+3. Plan minimal files and scope.
+4. Implement with tight, surgical changes.
+5. Run verification commands.
+6. Update tests/docs if required.
+7. If using issue flow, open PR that closes the Task issue.
+8. Move status forward (Ready -> In Progress -> Review -> Done) when using issue flow.
+
 ## Project Context
 
 - **Project:** `{{PROJECT_NAME}}`
