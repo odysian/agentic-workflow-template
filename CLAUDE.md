@@ -1,0 +1,9 @@
+@AGENTS.md
+@WORKFLOW.md
+@ISSUES_WORKFLOW.md
+@ARCHITECTURE.md
+@PATTERNS.md
+@REVIEW_CHECKLIST.md
+@skills/write-prd.md
+@skills/prd-to-issues.md
+@skills/issue-to-pr.md
