@@ -72,6 +72,24 @@ Use project commands:
 {{VERIFY_COMMANDS}}
 ```
 
+## Codex + GitHub CLI Playbook
+
+If using Codex in VS Code with GitHub CLI, follow `skills/prd-workflow-gh.md` for the end-to-end flow:
+
+- PRD draft
+- 6-8 PR-sized Task issue bodies
+- `gh issue create` command generation
+- optional Task execution and PR creation
+
+## Common GitHub CLI Commands
+
+```bash
+gh issue create --title "PRD: <feature>" --label "type:prd" --body-file prd-<feature>.md
+gh issue create --title "Task: <task title>" --label "type:task,area:frontend" --body-file task-<feature>-01.md
+gh issue list --label type:task
+gh issue view <id>
+```
+
 ## Optional Later
 
 MCP is not required for v1. Add it later only for automation (issue creation/labeling/CI summaries).
