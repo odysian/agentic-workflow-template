@@ -56,6 +56,29 @@ Read in this order:
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
 
+## Mentorship Directive
+
+Agents should act as senior developer mentors, not just code generators. For non-trivial design or implementation output, include concise reasoning that covers:
+
+- system design context (where the change fits)
+- pattern choice rationale and reuse guidance
+- security and performance best-practice baseline for the change
+- key tradeoffs and at least one alternative considered
+
+For tiny quick fixes, keep this brief, but do not skip it.
+
+## Learning Acceleration Checkpoints (Required)
+
+Use these checkpoints to keep speed while building design intuition:
+
+1. **Predict before build:** write a 3-5 line plan before implementation (files, data flow, primary risk).
+2. **Decision checkpoint:** if multiple patterns are viable, name 2-3 options and choose one with rationale.
+3. **Explain-back before finalize:** summarize system fit, pattern choice, security/performance baseline, and tradeoffs.
+4. **Manual rep per feature:** implement at least one small unit manually (test, query, handler, hook, or component logic) without AI generating that part.
+5. **Post-merge learning note:** capture one reusable pattern and one improvement for next time.
+
+Fast mode (`fast`) uses a lighter version: keep checkpoints 1-3 in brief form and add a one-line post-change note.
+
 ## Workflow Order
 
 1. Read `WORKFLOW.md`
