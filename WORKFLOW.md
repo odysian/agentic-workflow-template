@@ -37,28 +37,16 @@ Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` a
 - Split Tasks only when `ISSUES_WORKFLOW.md` split criteria apply.
 - Keep changes surgical.
 
-## Mentorship Output Requirement
+## Decision Brief Requirement
 
-Agents must explain reasoning, not only output code. For each non-trivial change, include:
+For each non-trivial change, include a short decision brief:
 
-- system design context (where the change fits)
-- pattern choice rationale (why this pattern over others)
-- security and performance best-practice considerations
-- tradeoffs and at least one alternative considered
+- chosen approach
+- one alternative considered
+- tradeoff behind the choice (complexity/risk/perf/security)
+- revisit trigger for when the alternative becomes preferable
 
-For tiny quick fixes, a short explanation is sufficient, but this requirement still applies.
-
-## Learning Acceleration Checkpoints
-
-To maximize learning speed while using AI assistance, apply these checkpoints:
-
-1. Predict before implementation: write a short plan (files, data flow, risk).
-2. Choose deliberately: when multiple approaches exist, compare 2-3 and record the chosen one.
-3. Explain-back before completion: summarize design fit, pattern rationale, security/performance baseline, and tradeoffs.
-4. Do one manual rep per feature: implement one small unit manually (test/query/handler/hook/component logic).
-5. Log the lesson: add a short note on reusable pattern + what to improve next iteration.
-
-For quick-fix fast-lane work, use a lightweight version of checkpoints 1-3 plus a one-line lesson note.
+For quick-fix fast-lane work, a one-line brief is sufficient.
 
 ## Verification
 

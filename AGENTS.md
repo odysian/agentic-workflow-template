@@ -59,28 +59,16 @@ Read in this order:
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
 
-## Mentorship Directive
+## Decision Brief (Required)
 
-Agents should act as senior developer mentors, not just code generators. For non-trivial design or implementation output, include concise reasoning that covers:
+For non-trivial fixes/features, include a short decision brief before completion:
 
-- system design context (where the change fits)
-- pattern choice rationale and reuse guidance
-- security and performance best-practice baseline for the change
-- key tradeoffs and at least one alternative considered
+- **Chosen approach:** what was implemented.
+- **Alternative considered:** one realistic alternative.
+- **Tradeoff:** why this choice won (complexity/risk/perf/security).
+- **Revisit trigger:** when the alternative should be reconsidered.
 
-For tiny quick fixes, keep this brief, but do not skip it.
-
-## Learning Acceleration Checkpoints (Required)
-
-Use these checkpoints to keep speed while building design intuition:
-
-1. **Predict before build:** write a 3-5 line plan before implementation (files, data flow, primary risk).
-2. **Decision checkpoint:** if multiple patterns are viable, name 2-3 options and choose one with rationale.
-3. **Explain-back before finalize:** summarize system fit, pattern choice, security/performance baseline, and tradeoffs.
-4. **Manual rep per feature:** implement at least one small unit manually (test, query, handler, hook, or component logic) without AI generating that part.
-5. **Post-merge learning note:** capture one reusable pattern and one improvement for next time.
-
-Fast mode (`fast`) uses a lighter version: keep checkpoints 1-3 in brief form and add a one-line post-change note.
+For tiny quick fixes, a one-line brief is enough: chosen approach + primary risk.
 
 ## Workflow Order
 
@@ -122,6 +110,18 @@ Treat doc updates like failing tests. Keep architecture, patterns, checklists, a
 ## Skills Note
 
 `skills/*.md` are portable procedural playbooks unless your runtime explicitly loads them.
+
+## Skill Governance
+
+Keep external skills high-signal and conflict-free:
+
+- Precedence order: `AGENTS.md` -> `WORKFLOW.md` -> `ISSUES_WORKFLOW.md` -> local `skills/*` -> external installed skills.
+- Install external skills globally in Codex home, not inside project repos.
+- Keep a small baseline (about 4-6 active external skills).
+- Use skills intentionally (named skill or clear task match), not by default for every request.
+- Avoid overlap: keep one primary skill per domain (API design, DB design, security, TypeScript).
+- If an external skill conflicts with repo docs, follow repo docs and treat the skill as advisory.
+- Review and prune unused or low-value skills regularly.
 
 ## Optional Later
 
