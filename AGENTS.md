@@ -11,27 +11,27 @@ Read in this order:
 4. `ARCHITECTURE.md` (if present)
 5. `PATTERNS.md` (if present)
 6. `REVIEW_CHECKLIST.md` (if present)
-7. `skills/write-prd.md` (if present)
-8. `skills/prd-to-issues.md` (if present)
+7. `skills/write-spec.md` (if present)
+8. `skills/spec-to-issues.md` (if present)
 9. `skills/issue-to-pr.md` (if present)
-10. `skills/prd-workflow-gh.md` (if present)
+10. `skills/spec-workflow-gh.md` (if present)
 
 ## Unit of Work Rule
 
 - **Unit of work is a GitHub Issue.**
 - Choose an execution mode from `ISSUES_WORKFLOW.md` before coding:
   - `single` (default): one feature -> one Task issue -> one PR
-  - `gated`: PRD issue + child Task issue(s) for feature sets or higher-risk work
+  - `gated`: Spec issue + child Task issue(s) for feature sets or higher-risk work
   - `fast`: quick-fix path for tiny low-risk changes (if project policy allows)
 - Convert freeform requests into the selected issue mode before implementation.
 - Work one Task issue at a time.
-- PRs close Task issues (`Closes #123`), not PRDs.
-- PRDs close only when all child Tasks are done or explicitly deferred.
+- PRs close Task issues (`Closes #123`), not Specs.
+- Specs close only when all child Tasks are done or explicitly deferred.
 - Detailed control-plane rules are canonical in `ISSUES_WORKFLOW.md`.
-- For one-shot issue body + `gh` command generation, use `skills/prd-workflow-gh.md`.
+- For one-shot issue body + `gh` command generation, use `skills/spec-workflow-gh.md`.
 - Default shorthand command:
   - `Create an issue workflow for feature <feature-id> in <filename>.`
-  - Interpreted as `mode=single` automation using `skills/prd-workflow-gh.md` with minimal chatter and direct `gh issue create`.
+  - Interpreted as `mode=single` automation using `skills/spec-workflow-gh.md` with minimal chatter and direct `gh issue create`.
 
 ## Agent Operating Loop
 
@@ -42,7 +42,7 @@ Read in this order:
 5. Implement with tight, surgical changes.
 6. Run verification commands.
 7. Update tests/docs if required.
-8. Open PR that closes the Task issue; close PRD after child Tasks are done/deferred.
+8. Open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
 
 ## Project Context
 

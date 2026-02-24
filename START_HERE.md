@@ -7,7 +7,7 @@ This folder is the project-agnostic baseline for an agentic workflow.
 1. Copy `template/base/` into a new repo root.
 2. Replace all required tokens before any implementation work.
 3. Confirm verify commands run locally and in CI.
-4. Start work through GitHub Issues: PRD -> Task -> PR.
+4. Start work through GitHub Issues: Spec -> Task -> PR.
 
 ## Required Tokens
 

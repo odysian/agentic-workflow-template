@@ -22,11 +22,13 @@ Read `ISSUES_WORKFLOW.md` before implementation.
 Core rule:
 
 - GitHub issues are the execution source of truth.
-- Choose execution mode: `single` (default), `gated` (PRD + Tasks), or `fast` (tiny low-risk fixes).
+- Choose execution mode: `single` (default), `gated` (Spec + Tasks), or `fast` (tiny low-risk fixes).
 - Default sizing is 1 feature -> 1 Task -> 1 PR unless split criteria apply.
 - PRs close Tasks.
-- PRDs close only when all child Tasks are done or deferred.
+- Specs close only when all child Tasks are done or deferred.
+- For `single` and `gated` modes, create a dedicated Task branch before implementation.
 - Backend-coupled work must have Decision Locks checked before implementation.
+- After major refactors, open one docs-only Task for readability hardening (comments + `docs/PATTERNS.md` updates), with no behavior changes.
 
 Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` and are mandatory gates.
 

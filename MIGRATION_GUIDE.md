@@ -26,7 +26,7 @@ This guide explains how to use this template as the foundation for a new project
 - `{{CI_LINKS_OR_NOTES}}`
 3. Confirm verification commands run locally.
 4. Configure GitHub labels and board.
-5. Start with a PRD issue, then split into Task issues.
+5. Start with a Spec issue, then split into Task issues.
 
 ## Part 2: Existing Project Adoption
 
@@ -38,7 +38,7 @@ This guide explains how to use this template as the foundation for a new project
 - `TASKS.md` = optional scratchpad only
 5. Roll out in two phases:
 - Phase A: docs/templates only
-- Phase B: enforce in active work (PRDs -> Tasks -> PRs)
+- Phase B: enforce in active work (Specs -> Tasks -> PRs)
 
 ## Definition of Ready and Done
 
@@ -52,7 +52,7 @@ No implementation should begin for backend-coupled work until Decision Locks are
 ## ADR Rule
 
 Use Decision issues/checkboxes for short-term locking.
-If a decision has lasting architecture/security/performance impact, create an ADR (`NNN-*.md`) and link it from the PRD and PR.
+If a decision has lasting architecture/security/performance impact, create an ADR (`NNN-*.md`) and link it from the Spec and PR.
 
 ## Optional Later: MCP
 

@@ -7,7 +7,7 @@
 
 ## Ongoing Release Process
 
-1. Open a PRD issue for meaningful template changes.
+1. Open a Spec issue for meaningful template changes.
 2. Split into Task issues and merge PRs that close Tasks.
 3. Update `VERSION.md` based on semantic versioning.
 4. Add short release notes in the Git tag annotation.
