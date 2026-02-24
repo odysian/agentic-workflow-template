@@ -36,6 +36,9 @@ Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` a
 
 - One issue at a time.
 - Default to one end-to-end Task per feature.
+- For new frontend projects, default to feature-first structure: `src/features/<feature>/*` plus `src/shared/*`.
+- For existing repos, keep current structure unless a dedicated migration task explicitly scopes restructuring.
+- Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC is acceptable when cohesive; split or create a linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
 - Split Tasks only when `ISSUES_WORKFLOW.md` split criteria apply.
 - Keep changes surgical.
 

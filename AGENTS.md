@@ -59,6 +59,13 @@ Read in this order:
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
 
+## Frontend Modularity Default
+
+- Default for new projects: use a feature-first frontend structure: `src/features/<feature>/{components,hooks,services,types,tests}` and `src/shared/{components,hooks,lib,types}`.
+- Keep feature boundaries explicit: feature internals stay private; cross-feature usage should go through public exports.
+- If a repo already uses a different structure, preserve it unless a dedicated migration task explicitly scopes restructuring.
+- Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC can be acceptable when cohesive; require split or linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
+
 ## Decision Brief (Required)
 
 For non-trivial fixes/features, include a short decision brief before completion:
