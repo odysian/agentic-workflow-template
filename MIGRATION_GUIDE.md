@@ -40,6 +40,16 @@ This guide explains how to use this template as the foundation for a new project
 - Phase A: docs/templates only
 - Phase B: enforce in active work (Specs -> Tasks -> PRs)
 
+### Canonical Adapter Prompt
+
+Run this in the target repo to force a consistent adaptation plan:
+
+`Run workflow adaptation for <repo-name>: map existing branch strategy, CI triggers, verify commands, issue labels, and GH reliability constraints to this template; output exact file edits, commands, and rollback notes.`
+
+Reference playbook:
+
+- `skills/adapt-workflow.md`
+
 ## Definition of Ready and Done
 
 Use `ISSUES_WORKFLOW.md` as the authoritative gate for:

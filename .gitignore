@@ -1,0 +1,4 @@
+.codex/audit/*
+!.codex/audit/.gitkeep
+.codex/outbox/*
+!.codex/outbox/.gitkeep

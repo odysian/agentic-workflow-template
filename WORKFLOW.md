@@ -1,98 +1,100 @@
 # WORKFLOW.md — {{PROJECT_NAME}}
 
-## Project Context
-
-- **Project:** `{{PROJECT_NAME}}`
-- **Stack:** `{{STACK_SUMMARY}}`
-- **Repo layout:** `{{REPO_STRUCTURE_OVERVIEW}}`
-
 ## Development Loop
 
 Every feature follows:
 
 1. Whiteboard
-2. Document
+2. Document as issue(s)
 3. Implement
-4. Finalize
+4. Fresh-context review
+5. Patch review findings (bounded)
+6. Finalize
 
-## Issues Workflow (Control Plane)
+## Control Plane
 
-Read `ISSUES_WORKFLOW.md` before implementation.
+`ISSUES_WORKFLOW.md` is the source of truth for execution mode, split criteria, and DoR/DoD.
 
-Core rule:
+## Bounded Review/Patch Loop
 
-- GitHub issues are the execution source of truth.
-- Choose execution mode: `single` (default), `gated` (Spec + Tasks), or `fast` (tiny low-risk fixes).
-- Default sizing is 1 feature -> 1 Task -> 1 PR unless split criteria apply.
-- PRs close Tasks.
-- Specs close only when all child Tasks are done or deferred.
-- For `single` and `gated` modes, create a dedicated Task branch before implementation.
-- Backend-coupled work must have Decision Locks checked before implementation.
-- After major refactors, open one docs-only Task for readability hardening (comments + `docs/PATTERNS.md` updates), with no behavior changes.
+For `single` and `gated` Task work:
 
-Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` and are mandatory gates.
+1. Implement Task acceptance criteria and verify.
+2. Commit and open PR (`Closes #<task-id>`).
+3. Run fresh-context review round `r1` in a separate session.
+4. Patch notable findings on same branch (`fix(review-r<round>): ...`).
+5. Re-verify.
+6. Run `r2` only if round `r1` produced a patch commit.
+7. Stop when clean, capped, or churn repeats.
 
-## Planning and Scope
+Caps:
 
-- One issue at a time.
-- Default to one end-to-end Task per feature.
-- For new frontend projects, default to feature-first structure: `src/features/<feature>/*` plus `src/shared/*`.
-- For existing repos, keep current structure unless a dedicated migration task explicitly scopes restructuring.
-- Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC is acceptable when cohesive; split or create a linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
-- Split Tasks only when `ISSUES_WORKFLOW.md` split criteria apply.
-- Keep changes surgical.
+- `max_review_rounds=2`
+- `max_auto_patch_commits=2`
 
-## Decision Brief Requirement
+## Canonical Local Commands
 
-For each non-trivial change, include a short decision brief:
+PR create (resilient):
 
-- chosen approach
-- one alternative considered
-- tradeoff behind the choice (complexity/risk/perf/security)
-- revisit trigger for when the alternative becomes preferable
+```bash
+scripts/create_pr.sh --title "Task #<id>: <short-title>" --body-file <pr-body.md> --base main --head <task-branch> --task-id <id>
+```
 
-For quick-fix fast-lane work, a one-line brief is sufficient.
+Fresh-context review loop:
+
+```bash
+scripts/fresh_review_loop.sh --task-id <id> --base origin/main --verify-cmd "<verify-command>"
+```
+
+Replay queued GH actions after connectivity/auth recovery:
+
+```bash
+scripts/gh_outbox_replay.sh
+```
+
+## GH Reliability Policy
+
+- Always use `--body-file` for issue/PR content.
+- Run `scripts/gh_preflight.sh` before GH write actions.
+- If GH preflight fails, queue JSON action to outbox and continue implementation flow locally.
+- Do not loop indefinitely on failing GH calls.
+- In CI, strict mode is default for PR creation (`scripts/create_pr.sh`) so queued actions fail the job.
+- Replay queue is lock-protected and idempotent (`scripts/gh_outbox_replay.sh`).
+
+## Required Audit Trail
+
+Per review round, keep evidence in local audit artifacts and PR (when available):
+
+- findings + severity
+- disposition (`patched`, `deferred`, `dismissed`)
+- patch commit SHA(s) or follow-up issue link(s)
+
+Local audit path:
+
+- `.codex/audit/task-<id>-<utc-timestamp>/`
 
 ## Verification
 
-Run the relevant checks before claiming completion.
-
-### Full Verification
+### Full
 
 ```bash
 {{VERIFY_COMMANDS}}
 ```
 
-### Frontend Verification
+### Frontend
 
 ```bash
 {{FRONTEND_VERIFY_COMMANDS}}
 ```
 
-### Backend Verification
+### Backend
 
 ```bash
 {{BACKEND_VERIFY_COMMANDS}}
 ```
 
-### Database Verification
+### DB
 
 ```bash
 {{DB_VERIFY_COMMANDS}}
 ```
-
-## Documentation
-
-Update docs when behavior/contracts/patterns change.
-
-Docs paths:
-
-- `{{DOCS_PATHS}}`
-
-## CI
-
-- `{{CI_LINKS_OR_NOTES}}`
-
-## Optional Later
-
-MCP is optional and not part of v1. Introduce it only when you need automation for issue operations or CI summaries.

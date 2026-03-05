@@ -25,6 +25,15 @@
 - [ ] Edge case covered
 - [ ] Verification commands pass
 
+## Fresh-Context Review
+
+- [ ] Fresh-context review pass completed on PR branch
+- [ ] Review/patch loop stayed within configured caps
+- [ ] Findings are documented with severity and disposition
+- [ ] Patch commits or follow-up issues are linked
+- [ ] Local audit artifacts exist under `.codex/audit/task-<id>-<utc-timestamp>/`
+- [ ] Queued GH actions (if any) are replayed or explicitly deferred (`scripts/gh_outbox_replay.sh`)
+
 ## Docs
 
 - [ ] Architecture/pattern docs updated if needed

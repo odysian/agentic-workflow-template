@@ -1,136 +1,80 @@
 # AGENTS.md — {{PROJECT_NAME}}
 
-## Start Here (Canonical Entrypoint)
-
-`AGENTS.md` is the canonical entrypoint for agents and contributors in this repository.
+## Canonical Entry
 
 Read in this order:
-1. `AGENTS.md` (this file)
+
+1. `AGENTS.md`
 2. `WORKFLOW.md`
 3. `ISSUES_WORKFLOW.md`
 4. `ARCHITECTURE.md` (if present)
 5. `PATTERNS.md` (if present)
 6. `REVIEW_CHECKLIST.md` (if present)
-7. `skills/write-spec.md` (if present)
-8. `skills/spec-to-issues.md` (if present)
-9. `skills/issue-to-pr.md` (if present)
-10. `skills/spec-workflow-gh.md` (if present)
+7. `skills/adapt-workflow.md` (when adopting this template into an existing repo)
 
-## Unit of Work Rule
+Use `skills/*` playbooks only when the task explicitly needs them.
 
-- **Unit of work is a GitHub Issue.**
-- Choose an execution mode from `ISSUES_WORKFLOW.md` before coding:
-  - `single` (default): one feature -> one Task issue -> one PR
-  - `gated`: Spec issue + child Task issue(s) for feature sets or higher-risk work
-  - `fast`: quick-fix path for tiny low-risk changes (if project policy allows)
-- Convert freeform requests into the selected issue mode before implementation.
-- Work one Task issue at a time.
-- PRs close Task issues (`Closes #123`), not Specs.
-- Specs close only when all child Tasks are done or explicitly deferred.
-- Detailed control-plane rules are canonical in `ISSUES_WORKFLOW.md`.
-- For one-shot issue body + `gh` command generation, use `skills/spec-workflow-gh.md`.
-- Canonical single-line kickoff prompt:
-  - `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
-  - If `mode` is omitted, default to `single`.
-  - Expected output: issue body file(s), `gh issue create` command(s), created issue link(s), and a 3-5 step implementation plan.
+## Non-Negotiables
 
-## Agent Operating Loop
-
-1. Whiteboard scope in `plans/*.md` or spec docs (scratch only).
-2. Choose execution mode (`single` default, `gated`, or `fast`) and create required issue(s).
-3. Restate goal and acceptance criteria.
-4. Plan minimal files and scope.
-5. Implement with tight, surgical changes.
-6. Run verification commands.
-7. Update tests/docs if required.
-8. Open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
-
-## Project Context
-
-- **Project:** `{{PROJECT_NAME}}`
-- **Stack:** `{{STACK_SUMMARY}}`
-- **Repo layout:** `{{REPO_STRUCTURE_OVERVIEW}}`
-
-## Operating Rules
-
-- Keep solutions simple and explicit.
-- Make surgical changes only.
-- Match existing style and conventions.
+- Unit of work is a GitHub Task issue.
+- Default sizing: `1 feature -> 1 Task -> 1 PR`.
+- Work one Task at a time.
+- PRs close Tasks (`Closes #123`), not Specs.
+- Keep changes surgical; do not touch unrelated files.
 - Do not install dependencies without approval.
-- Do not change unrelated files.
-- Do not modify applied migrations; create a new migration.
+- Do not modify applied migrations; create new migrations.
 
-## Frontend Modularity Default
+## Execution Modes
 
-- Default for new projects: use a feature-first frontend structure: `src/features/<feature>/{components,hooks,services,types,tests}` and `src/shared/{components,hooks,lib,types}`.
-- Keep feature boundaries explicit: feature internals stay private; cross-feature usage should go through public exports.
-- If a repo already uses a different structure, preserve it unless a dedicated migration task explicitly scopes restructuring.
-- Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC can be acceptable when cohesive; require split or linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
+Choose mode before coding (rules in `ISSUES_WORKFLOW.md`):
+
+- `single` (default): one feature -> one Task -> one PR
+- `gated`: Spec + child Task(s) for higher-risk feature sets
+- `fast`: tiny low-risk fixes only
+
+Canonical kickoff prompt:
+
+`Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
+
+## Agent Loop
+
+1. Restate goal + acceptance criteria.
+2. Confirm files in scope.
+3. Implement minimal change.
+4. Run verification.
+5. Open PR.
+6. Run bounded fresh-context review loop.
+7. Update docs/tests if required.
+
+## Local Automation Defaults
+
+- PR creation: use `scripts/create_pr.sh` (never inline multiline `gh --body`)
+- Fresh review loop: use `scripts/fresh_review_loop.sh`
+- GH connectivity fallback queue: `scripts/gh_outbox_replay.sh`
 
 ## Decision Brief (Required)
 
-For non-trivial fixes/features, include a short decision brief before completion:
+For non-trivial work, include:
 
-- **Chosen approach:** what was implemented.
-- **Alternative considered:** one realistic alternative.
-- **Tradeoff:** why this choice won (complexity/risk/perf/security).
-- **Revisit trigger:** when the alternative should be reconsidered.
+- chosen approach
+- one alternative considered
+- tradeoff
+- revisit trigger
 
-For tiny quick fixes, a one-line brief is enough: chosen approach + primary risk.
-
-## Workflow Order
-
-1. Read `WORKFLOW.md`
-2. Read `ISSUES_WORKFLOW.md`
-3. Read project docs in `{{DOCS_PATHS}}`
-4. Execute one ready Task issue
+For tiny fixes: one-line brief (approach + primary risk).
 
 ## Verification
 
-### Full
-
-```bash
-{{VERIFY_COMMANDS}}
-```
-
-### Frontend
-
-```bash
-{{FRONTEND_VERIFY_COMMANDS}}
-```
-
-### Backend
-
-```bash
-{{BACKEND_VERIFY_COMMANDS}}
-```
-
-### DB
-
-```bash
-{{DB_VERIFY_COMMANDS}}
-```
+Run project verification commands from `WORKFLOW.md`.
 
 ## Documentation Discipline
 
-Treat doc updates like failing tests. Keep architecture, patterns, checklists, and ADRs current.
-
-## Skills Note
-
-`skills/*.md` are portable procedural playbooks unless your runtime explicitly loads them.
+Treat doc updates like failing tests when behavior/contracts/patterns change.
 
 ## Skill Governance
 
-Keep external skills high-signal and conflict-free:
+Precedence:
 
-- Precedence order: `AGENTS.md` -> `WORKFLOW.md` -> `ISSUES_WORKFLOW.md` -> local `skills/*` -> external installed skills.
-- Install external skills globally in Codex home, not inside project repos.
-- Keep a small baseline (about 4-6 active external skills).
-- Use skills intentionally (named skill or clear task match), not by default for every request.
-- Avoid overlap: keep one primary skill per domain (API design, DB design, security, TypeScript).
-- If an external skill conflicts with repo docs, follow repo docs and treat the skill as advisory.
-- Review and prune unused or low-value skills regularly.
+`AGENTS.md` -> `WORKFLOW.md` -> `ISSUES_WORKFLOW.md` -> local `skills/*` -> external skills
 
-## Optional Later
-
-MCP is out of scope for v1. It can be added later to automate issue creation/labeling/CI summaries.
+If external skill guidance conflicts with repo docs, repo docs win.

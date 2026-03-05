@@ -1,74 +1,53 @@
-# Issues Workflow
+# ISSUES_WORKFLOW.md
 
-This repository uses GitHub issues as the execution control plane.
+GitHub issues are the execution control plane.
 
-## Workflow Loop
+## Core Rules
 
-1. Whiteboard feature ideas in `plans/*.md` or spec docs (scratch planning).
-2. Document work as issues using one of the execution modes below.
-3. Implement and close Task issues via PRs (`Closes #...`).
-4. Finalize by updating required docs and closing related Spec/tracker issues.
-
-## Objects
-
-- **Task** (`type:task`): PR-sized implementation unit and default feature issue.
-- **Spec** (`type:spec`): feature-set/spec umbrella with decision locks and child Task links.
-- **Decision** (`type:decision`): short-term decision lock with rationale.
-
-## Control Plane Rules
-
-1. GitHub Issues are the source of truth for execution. `TASKS.md` (if present) is scratchpad only.
-2. The default execution path is **1 feature -> 1 Task -> 1 PR**.
+1. Source of truth is GitHub Issues (`TASKS.md` is scratch only).
+2. Default path: `1 feature -> 1 Task -> 1 PR`.
 3. PRs close Task issues (`Closes #...`), not Specs.
-4. Specs close only when all child Tasks are done or explicitly deferred.
-5. Tasks are PR-sized; in this workflow PR-sized usually means end-to-end feature delivery.
-6. Backend-coupled work requires Decision Locks checked before implementation begins.
-7. After major refactors, open one docs-only Task for readability hardening (comments + `docs/PATTERNS.md` updates), with no behavior changes.
-8. For `single` and `gated` modes, create a dedicated branch for the Task issue before implementation (for example: `task-123-short-name`).
+4. Specs close only when child Tasks are complete or explicitly deferred.
+5. For `single`/`gated`, create a dedicated Task branch before coding.
+6. Backend-coupled work requires Decision Locks before implementation.
+7. Run fresh-context review before finalize (separate session).
+8. Keep review/patch loop bounded (`max_review_rounds=2`, `max_auto_patch_commits=2`).
+9. Document each review round (findings, severity, disposition, patch SHA/follow-up).
 
-## Execution Modes (Choose Before Opening Issues)
+## Execution Modes
 
-### `single` (Default)
+### `single` (default)
 
-Use one Task issue per feature, then one PR that closes it.
-
+- One Task issue per feature.
+- One PR closes that Task.
 - Best for most feature work.
-- Task includes mini-spec content: summary/scope/acceptance criteria/verification.
-- Decision Locks live in the Task for backend-coupled work.
 
 ### `gated` (Spec + Tasks)
 
-Use one Spec issue plus child Task issue(s).
+- One Spec issue + child Task issue(s).
+- Use for higher-risk feature sets.
+- Child Tasks remain PR-sized.
 
-- Use when working a feature set or higher-risk work.
-- Decision Locks live in the Spec.
-- Child Tasks should stay PR-sized (default one Task per feature).
+### `fast` (quick fix)
 
-### `fast` (Quick Fix)
+Allowed only when all are true:
 
-For low-risk maintenance, a direct quick-fix path can be allowed (if project policy allows) without mandatory issue creation when all are true:
+- one logical low-risk fix
+- no schema/API/realtime contract changes
+- no auth/security model changes
+- no migrations/dependency changes
+- no ADR-level architectural decision
 
-- the change is a single logical fix
-- no schema/API/realtime contract change
-- no auth/security model change
-- no migration/dependency changes
-- no ADR-worthy architecture decision
+If scope grows, switch to `single` or `gated`.
 
-When using Fast Lane:
+## Split Criteria
 
-- run relevant verification
-- use a clear quick-fix commit message
-- follow the repo's branch/merge policy
-- if scope grows, switch to `single` or `gated`
+Split into multiple Tasks only when it improves risk/delivery:
 
-## When to Split Into Multiple Tasks
-
-Split only when it clearly improves delivery or risk control:
-
-- change is too large for one PR (guideline: ~600+ LOC or hard to review)
-- backend contract should land before frontend integration
-- migrations or realtime contract changes increase risk
-- parallel work or staged rollout is needed
+- too large for one PR (~600+ LOC or hard to review)
+- backend contract must land before frontend integration
+- migration/realtime contract risk needs staged delivery
+- parallel work or rollout staging required
 
 ## Definition of Ready
 
@@ -76,80 +55,67 @@ A Task is ready when:
 
 - acceptance criteria are explicit
 - verification commands are listed
-- dependencies/links are included
-- for backend-coupled work: Decision Locks are checked in the controlling issue (Task in `single`, Spec in `gated`)
+- dependencies/links are documented
+- Decision Locks are checked for backend-coupled work
 
 ## Definition of Done
 
 A Task is done when:
 
-- PR is merged
-- verification commands pass
-- tests and docs for the feature are included in the same Task by default
-- follow-up issues are created for deferred work
+- PR merged
+- verification passes
+- tests/docs updated for in-scope changes
+- deferred work captured as follow-up issue(s)
+- required fresh-context review completed and documented
+- auto-review patches stayed within loop caps
 
-## Decision Records and ADRs
+## Fresh-Context Automation (Local First)
 
-- Default: Decision Locks live in the controlling issue (Task in `single`, Spec in `gated`).
-- Use a separate Decision issue only for non-trivial or cross-Spec discussion.
-- If a decision has lasting architecture/security/performance impact:
-  - create an ADR (`NNN-*.md`)
-  - link it from the Spec or Task
-  - link it from the implementing PR
+Canonical flow:
 
-## Verification Template
+1. Implement + verify.
+2. Open PR with `Closes #<task-id>`.
+3. Run review round `r1` (fresh session).
+4. Patch high/critical findings now.
+5. Defer low/medium unless trivial and low-risk.
+6. Run round `r2` only if a patch commit was added in `r1`.
+7. Stop on clean/cap/churn.
 
-Use project commands:
-
-```bash
-{{VERIFY_COMMANDS}}
-```
-
-Prefer repo-level verify entrypoints when available (for example: `make backend-verify`, `make frontend-verify`).
-
-## Codex + GitHub CLI Playbook
-
-If using Codex in VS Code with GitHub CLI, follow `skills/spec-workflow-gh.md`.
-
-- `mode=single` (default): generate one Task issue body + `gh issue create` command
-- `mode=gated`: generate Spec + Task issue body + commands
-- `mode=fast`: generate quick-fix checklist (no issue commands by default)
-
-### Standard Kickoff Prompt (Single Line)
-
-Use this canonical kickoff prompt:
-
-`Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
-
-Rules:
-
-- If `mode` is omitted, default to `single`.
-- Output should include: issue body file(s), `gh issue create` command(s), created issue link(s), and a 3-5 step implementation plan.
-- Keep chatter minimal; ask follow-up questions only for hard blockers (auth/permissions/missing required labels).
-
-### Resiliency Checkpoints (Lightweight)
-
-Before implementation in `single`/`gated` modes, restate:
-
-- Goal and non-goals
-- Files in scope and files explicitly out of scope
-- Acceptance criteria and verification commands
-
-Before completion, restate:
-
-- What changed
-- What did not change (contracts/behavior)
-- Verification results and follow-ups (if any)
-
-## Common GitHub CLI Commands
+Canonical local command:
 
 ```bash
-gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file task-<feature>-01.md
-gh issue create --title "Spec: <feature set>" --label "type:spec" --body-file spec-<feature-set>.md
-gh issue list --label type:task
-gh issue view <id>
+scripts/fresh_review_loop.sh --task-id <id> --base origin/main --verify-cmd "<verify-command>"
 ```
 
-## Optional Later
+Optional PR comment mirroring:
 
-MCP is not required for v1. Add it later only for automation (issue creation/labeling/CI summaries).
+```bash
+scripts/fresh_review_loop.sh --task-id <id> --base origin/main --verify-cmd "<verify-command>" --post-pr-comments --pr <number>
+```
+
+Local audit source of truth:
+
+- `.codex/audit/task-<id>-<utc-timestamp>/`
+- round review/patch artifacts
+- `summary.md`
+
+## GH Reliability (Fail-Open)
+
+Use resilient wrappers:
+
+```bash
+scripts/create_pr.sh --title "Task #<id>: <short-title>" --body-file <pr-body.md> --base main --head <task-branch> --task-id <id>
+```
+
+Behavior:
+
+- run preflight (`scripts/gh_preflight.sh`)
+- if GH fails (auth/DNS/API), queue GH actions as JSON to `.codex/outbox/pending/`
+- continue implementation/review flow without blocking
+- queue replay is lock-protected and idempotent
+- in CI, PR creation defaults to strict mode (queued action fails job unless `--no-strict`)
+- replay queued GH actions after recovery:
+
+```bash
+scripts/gh_outbox_replay.sh
+```
