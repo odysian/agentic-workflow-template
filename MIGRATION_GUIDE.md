@@ -50,6 +50,22 @@ Reference playbook:
 
 - `skills/adapt-workflow.md`
 
+### Mandatory Adoption Baseline (All Existing Repos)
+
+When adapting this template, treat local automation as required defaults (not optional):
+
+- local PR create wrapper: `scripts/create_pr.sh`
+- local bounded review/patch loop: `scripts/fresh_review_loop.sh`
+- GH preflight + outbox queue/replay: `scripts/gh_preflight.sh`, `scripts/gh_outbox_append.sh`, `scripts/gh_outbox_replay.sh`
+- review prompt/schema assets under `scripts/prompts/` and `scripts/schemas/`
+- local artifact roots: `.codex/audit/.gitkeep` and `.codex/outbox/.gitkeep`
+- `.gitignore` rules for `.codex/audit/*` and `.codex/outbox/*`
+
+For CI behavior in adapted repos:
+
+- local workflow remains fail-open for GH write failures (queue and continue)
+- CI remains fail-fast by default for queued PR creation actions unless explicitly overridden
+
 ## Definition of Ready and Done
 
 Use `ISSUES_WORKFLOW.md` as the authoritative gate for:
