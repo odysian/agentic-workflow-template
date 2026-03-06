@@ -41,9 +41,10 @@ Read in this order:
 3. Restate goal and acceptance criteria.
 4. Plan minimal files and scope.
 5. Implement with tight, surgical changes.
-6. Run verification commands.
-7. Update tests/docs if required.
-8. Open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
+6. Run verification commands once (or once per code change set).
+7. Open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
+8. Provide a lean reviewer follow-up prompt for a separate review pass.
+9. Patch only actionable findings, rerun relevant verification, and finalize.
 
 ## Project Context
 
@@ -59,6 +60,8 @@ Read in this order:
 - Do not install dependencies without approval.
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
+- Keep code review lean: focus on major bugs/regressions and missing tests.
+- In review mode, avoid environment triage loops, worktree setup, and repeated full-suite verification unless a blocker requires it.
 
 ## Frontend Modularity Default
 
@@ -84,6 +87,23 @@ For tiny quick fixes, a one-line brief is enough: chosen approach + primary risk
 2. Read `ISSUES_WORKFLOW.md`
 3. Read project docs in `{{DOCS_PATHS}}`
 4. Execute one ready Task issue
+
+## Reviewer Handoff Contract
+
+After implementation PR is open, the implementation agent provides a reviewer prompt containing:
+
+- Task/PR identifier and branch/base
+- verification already run
+- explicit request for `APPROVED` or `ACTIONABLE`
+- findings format: severity, file/path:line, issue, required fix
+
+Reviewer pass default constraints:
+
+- use local diff context first
+- no broad environment triage by default
+- no worktree creation by default
+- no rerun of broad verification already reported green
+- no command transcript in output unless a command failed
 
 ## Verification
 

@@ -45,6 +45,7 @@ Interpret this shorthand as:
 - `Parent Spec: (placeholder)` only in `mode=gated`
 5. Final execution step for issue modes:
 - start Task `#<id>` in a new branch and open PR with `Closes #<id>`
+- provide a lean reviewer follow-up prompt after PR creation
 
 ## Procedure
 
@@ -93,6 +94,12 @@ Ask Codex to:
 - start Task `#<id>` in a new branch
 - implement and verify
 - open PR containing `Closes #<id>`
+- provide reviewer follow-up prompt with explicit constraints:
+  - major bugs/regressions + missing tests/docs only
+  - no environment triage loops
+  - no worktree setup
+  - no broad verification reruns already reported green
+  - output findings first, no command transcript unless a command failed
 
 ## Common GitHub CLI Snippets
 

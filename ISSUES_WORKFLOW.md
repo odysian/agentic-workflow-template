@@ -25,6 +25,7 @@ This repository uses GitHub issues as the execution control plane.
 6. Backend-coupled work requires Decision Locks checked before implementation begins.
 7. After major refactors, open one docs-only Task for readability hardening (comments + `docs/PATTERNS.md` updates), with no behavior changes.
 8. For `single` and `gated` modes, create a dedicated branch for the Task issue before implementation (for example: `task-123-short-name`).
+9. After Task PR creation, run a lean reviewer follow-up pass and return `APPROVED` or `ACTIONABLE`.
 
 ## Execution Modes (Choose Before Opening Issues)
 
@@ -87,6 +88,7 @@ A Task is done when:
 - verification commands pass
 - tests and docs for the feature are included in the same Task by default
 - follow-up issues are created for deferred work
+- reviewer follow-up is complete with verdict and actionable findings addressed or deferred explicitly
 
 ## Decision Records and ADRs
 
@@ -140,6 +142,34 @@ Before completion, restate:
 - What changed
 - What did not change (contracts/behavior)
 - Verification results and follow-ups (if any)
+
+## Lean Reviewer Follow-Up (Default)
+
+This review step is intentionally narrow and fast.
+
+Flow:
+
+1. Implementation agent opens PR and provides reviewer prompt.
+2. Reviewer inspects major correctness/regression risks and missing tests/docs.
+3. Reviewer returns:
+   - `APPROVED`, or
+   - `ACTIONABLE` with concrete fixes.
+4. If `ACTIONABLE`, implementation agent patches and reruns relevant verification only.
+5. Optional second review pass only if patching changed behavior significantly.
+
+Reviewer constraints:
+
+- use local diff/repo context first
+- no environment triage loops by default
+- no worktree setup by default
+- no broad verification reruns already reported green
+- no command transcript unless a command failed
+
+Required reviewer output:
+
+1. Verdict: `APPROVED` or `ACTIONABLE`
+2. Findings (if actionable): severity, file/path:line, issue, required fix
+3. Residual risk/testing gaps (up to 3 bullets)
 
 ## Common GitHub CLI Commands
 

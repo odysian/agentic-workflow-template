@@ -13,7 +13,10 @@ Every feature follows:
 1. Whiteboard
 2. Document
 3. Implement
-4. Finalize
+4. Verify
+5. Review handoff
+6. Patch (if needed)
+7. Finalize
 
 ## Issues Workflow (Control Plane)
 
@@ -31,6 +34,45 @@ Core rule:
 - After major refactors, open one docs-only Task for readability hardening (comments + `docs/PATTERNS.md` updates), with no behavior changes.
 
 Definition of Ready and Definition of Done are defined in `ISSUES_WORKFLOW.md` and are mandatory gates.
+
+## Lean Review Mode (Default)
+
+After implementation and PR creation, run one focused reviewer follow-up pass:
+
+- Reviewer scope: major correctness bugs, regressions, and missing tests/docs.
+- Reviewer output: `APPROVED` or `ACTIONABLE`.
+- If `ACTIONABLE`, patch findings and rerun only relevant verification.
+- Allow at most one follow-up review round after patching.
+
+Default reviewer constraints:
+
+- use local branch diff/repo context first
+- skip broad environment triage unless blocked
+- do not create worktrees by default
+- do not rerun full verification already reported green
+- report findings first; no command-by-command transcript unless a command failed
+
+## Canonical Reviewer Follow-Up Prompt
+
+Use this after opening a Task PR:
+
+```text
+Review Task #<id> / PR #<id> on branch <task-branch> vs <base-branch>.
+
+Goal:
+- Find major bugs/regressions and missing tests/docs.
+
+Constraints:
+- Use local diff and repository context first.
+- No environment triage loops, no worktree setup, no broad verification reruns.
+- Run targeted checks only if needed to validate a specific finding.
+- Keep output concise and findings-first.
+
+Required output:
+1. Verdict: APPROVED or ACTIONABLE
+2. Findings (if ACTIONABLE): severity, file/path:line, issue, required fix
+3. Residual risk/testing gaps (max 3 bullets)
+```
 
 ## Planning and Scope
 

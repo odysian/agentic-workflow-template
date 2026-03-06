@@ -1,9 +1,14 @@
 # Release Strategy
 
-## First Release
+## Current Release
 
-- Initial baseline tag: `v0.1.0`
-- Scope: base workflow docs, issue templates, PR template, skills playbooks, migration guide.
+- Current baseline tag: `v0.2.0`
+- Scope: lean workflow defaults with explicit reviewer follow-up prompt contract and reduced review-process overhead.
+
+## Release History (Short)
+
+- `v0.1.0`: base workflow docs, issue templates, PR template, skills playbooks, migration guide.
+- `v0.2.0`: lean implementation -> PR -> reviewer prompt flow, focused review constraints, and streamlined review reporting requirements.
 
 ## Ongoing Release Process
 

@@ -25,6 +25,13 @@
 - [ ] Edge case covered
 - [ ] Verification commands pass
 
+## Reviewer Follow-Up
+
+- [ ] Reviewer verdict recorded (`APPROVED` or `ACTIONABLE`)
+- [ ] Actionable findings include severity + file/path:line + required fix
+- [ ] Review focused on major bugs/regressions and missing tests/docs
+- [ ] No unnecessary environment triage/worktree/full-suite reruns were performed
+
 ## Docs
 
 - [ ] Architecture/pattern docs updated if needed

@@ -10,4 +10,20 @@ Given a Task issue:
 4. Add/update tests as required by scope.
 5. Run verification commands.
 6. Open PR with `Closes #<task-issue-number>`.
-7. Update docs and ADR links when applicable.
+7. Provide a lean reviewer follow-up prompt for a separate review pass.
+8. If reviewer returns `ACTIONABLE`, patch findings and rerun relevant verification only.
+9. Optionally run one follow-up review pass if needed.
+10. Update docs and ADR links when applicable.
+
+Reviewer prompt should require:
+
+1. Verdict: `APPROVED` or `ACTIONABLE`
+2. Findings (if actionable): severity, file/path:line, issue, required fix
+3. Residual risk/testing gaps (max 3 bullets)
+
+Reviewer constraints:
+
+- no environment triage loops
+- no worktree setup
+- no broad verification reruns already reported green
+- no command transcript unless a command failed

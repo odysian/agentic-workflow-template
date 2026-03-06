@@ -39,6 +39,10 @@ This guide explains how to use this template as the foundation for a new project
 5. Roll out in two phases:
 - Phase A: docs/templates only
 - Phase B: enforce in active work (Specs -> Tasks -> PRs)
+6. Set review policy to lean follow-up by default:
+- implementation agent provides reviewer prompt after PR creation
+- reviewer returns only `APPROVED` or `ACTIONABLE`
+- reviewer avoids environment triage loops, worktree setup, and broad verification reruns
 
 ## Definition of Ready and Done
 
