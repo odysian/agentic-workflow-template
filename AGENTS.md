@@ -19,10 +19,8 @@ Read in this order:
 ## Unit of Work Rule
 
 - **Unit of work is a GitHub Issue.**
-- Choose an execution mode from `ISSUES_WORKFLOW.md` before coding:
-  - `single` (default): one feature -> one Task issue -> one PR
-  - `gated`: Spec issue + child Task issue(s) for feature sets or higher-risk work
-  - `fast`: quick-fix path for tiny low-risk changes (if project policy allows)
+- Use `single` mode by default: one feature -> one Task issue -> one PR.
+- Use `gated` or `fast` only when the user explicitly requests it.
 - Convert freeform requests into the selected issue mode before implementation.
 - Work one Task issue at a time.
 - PRs close Task issues (`Closes #123`), not Specs.
@@ -32,12 +30,13 @@ Read in this order:
 - Canonical single-line kickoff prompt:
   - `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
   - If `mode` is omitted, default to `single`.
+  - Do not switch to `gated` or `fast` unless explicitly requested.
   - Expected output: issue body file(s), `gh issue create` command(s), created issue link(s), and a 3-5 step implementation plan.
 
 ## Agent Operating Loop
 
 1. Whiteboard scope in `plans/*.md` or spec docs (scratch only).
-2. Choose execution mode (`single` default, `gated`, or `fast`) and create required issue(s).
+2. Choose execution mode and create required issue(s) (`single` unless explicitly asked for `gated`/`fast`).
 3. Restate goal and acceptance criteria.
 4. Plan minimal files and scope.
 5. Implement with tight, surgical changes.
@@ -70,16 +69,16 @@ Read in this order:
 - If a repo already uses a different structure, preserve it unless a dedicated migration task explicitly scopes restructuring.
 - Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC can be acceptable when cohesive; require split or linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
 
-## Decision Brief (Required)
+## Decision Brief (Conditional)
 
-For non-trivial fixes/features, include a short decision brief before completion:
+For non-trivial fixes/features, include a short decision brief only when behavior/contracts/architecture decisions changed:
 
 - **Chosen approach:** what was implemented.
 - **Alternative considered:** one realistic alternative.
 - **Tradeoff:** why this choice won (complexity/risk/perf/security).
 - **Revisit trigger:** when the alternative should be reconsidered.
 
-For tiny quick fixes, a one-line brief is enough: chosen approach + primary risk.
+For tiny quick fixes with no contract change, decision brief is optional.
 
 ## Workflow Order
 
@@ -104,6 +103,7 @@ Reviewer pass default constraints:
 - no worktree creation by default
 - no rerun of broad verification already reported green
 - no command transcript in output unless a command failed
+- default to one review pass; run a second pass only if the user explicitly requests it
 
 ## Verification
 

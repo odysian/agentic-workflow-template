@@ -12,7 +12,7 @@ Given a Task issue:
 6. Open PR with `Closes #<task-issue-number>`.
 7. Provide a lean reviewer follow-up prompt for a separate review pass.
 8. If reviewer returns `ACTIONABLE`, patch findings and rerun relevant verification only.
-9. Optionally run one follow-up review pass if needed.
+9. Run a follow-up review pass only if explicitly requested.
 10. Update docs and ADR links when applicable.
 
 Reviewer prompt should require:

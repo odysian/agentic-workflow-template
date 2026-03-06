@@ -7,7 +7,7 @@ This repository uses GitHub issues as the execution control plane.
 1. Whiteboard feature ideas in `plans/*.md` or spec docs (scratch planning).
 2. Document work as issues using one of the execution modes below.
 3. Implement and close Task issues via PRs (`Closes #...`).
-4. Finalize by updating required docs and closing related Spec/tracker issues.
+4. Finalize by updating docs only when behavior/contracts changed and close related Spec/tracker issues.
 
 ## Objects
 
@@ -28,6 +28,8 @@ This repository uses GitHub issues as the execution control plane.
 9. After Task PR creation, run a lean reviewer follow-up pass and return `APPROVED` or `ACTIONABLE`.
 
 ## Execution Modes (Choose Before Opening Issues)
+
+Use `single` by default. Use `gated` or `fast` only when explicitly requested.
 
 ### `single` (Default)
 
@@ -86,7 +88,8 @@ A Task is done when:
 
 - PR is merged
 - verification commands pass
-- tests and docs for the feature are included in the same Task by default
+- tests for the feature are included in the same Task by default
+- docs are updated when behavior/contracts changed
 - follow-up issues are created for deferred work
 - reviewer follow-up is complete with verdict and actionable findings addressed or deferred explicitly
 
@@ -114,8 +117,8 @@ Prefer repo-level verify entrypoints when available (for example: `make backend-
 If using Codex in VS Code with GitHub CLI, follow `skills/spec-workflow-gh.md`.
 
 - `mode=single` (default): generate one Task issue body + `gh issue create` command
-- `mode=gated`: generate Spec + Task issue body + commands
-- `mode=fast`: generate quick-fix checklist (no issue commands by default)
+- `mode=gated`: generate Spec + Task issue body + commands (only when explicitly requested)
+- `mode=fast`: generate quick-fix checklist (only when explicitly requested)
 
 ### Standard Kickoff Prompt (Single Line)
 
@@ -126,6 +129,7 @@ Use this canonical kickoff prompt:
 Rules:
 
 - If `mode` is omitted, default to `single`.
+- Do not switch to `gated` or `fast` unless explicitly requested.
 - Output should include: issue body file(s), `gh issue create` command(s), created issue link(s), and a 3-5 step implementation plan.
 - Keep chatter minimal; ask follow-up questions only for hard blockers (auth/permissions/missing required labels).
 
@@ -155,7 +159,7 @@ Flow:
    - `APPROVED`, or
    - `ACTIONABLE` with concrete fixes.
 4. If `ACTIONABLE`, implementation agent patches and reruns relevant verification only.
-5. Optional second review pass only if patching changed behavior significantly.
+5. Run second review pass only if explicitly requested.
 
 Reviewer constraints:
 

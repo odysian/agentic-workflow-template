@@ -25,7 +25,7 @@ Read `ISSUES_WORKFLOW.md` before implementation.
 Core rule:
 
 - GitHub issues are the execution source of truth.
-- Choose execution mode: `single` (default), `gated` (Spec + Tasks), or `fast` (tiny low-risk fixes).
+- Choose execution mode: `single` by default; use `gated` or `fast` only when explicitly requested.
 - Default sizing is 1 feature -> 1 Task -> 1 PR unless split criteria apply.
 - PRs close Tasks.
 - Specs close only when all child Tasks are done or deferred.
@@ -42,7 +42,7 @@ After implementation and PR creation, run one focused reviewer follow-up pass:
 - Reviewer scope: major correctness bugs, regressions, and missing tests/docs.
 - Reviewer output: `APPROVED` or `ACTIONABLE`.
 - If `ACTIONABLE`, patch findings and rerun only relevant verification.
-- Allow at most one follow-up review round after patching.
+- Default to one review pass; run a second pass only when explicitly requested.
 
 Default reviewer constraints:
 
@@ -86,14 +86,14 @@ Required output:
 
 ## Decision Brief Requirement
 
-For each non-trivial change, include a short decision brief:
+For non-trivial changes that modify behavior/contracts/architecture, include a short decision brief:
 
 - chosen approach
 - one alternative considered
 - tradeoff behind the choice (complexity/risk/perf/security)
 - revisit trigger for when the alternative becomes preferable
 
-For quick-fix fast-lane work, a one-line brief is sufficient.
+For small tasks with no contract/behavior change, decision brief is optional.
 
 ## Verification
 
@@ -125,7 +125,7 @@ Run the relevant checks before claiming completion.
 
 ## Documentation
 
-Update docs when behavior/contracts/patterns change.
+Update docs only when behavior/contracts/patterns changed.
 
 Docs paths:
 

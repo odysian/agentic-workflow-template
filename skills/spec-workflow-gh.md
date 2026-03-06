@@ -15,6 +15,7 @@ Default shorthand request:
 Interpret this shorthand as:
 
 - if `mode` omitted, use `mode=single`
+- keep `mode=single` unless `gated` or `fast` is explicitly requested
 - source from `<filename>` (feature section)
 - create/update one Task body file under `plans/`
 - run `gh issue create` directly
@@ -23,7 +24,7 @@ Interpret this shorthand as:
 ## Inputs
 
 - Feature identifier/title
-- Mode: `single` (default), `gated`, or `fast`
+- Mode: `single` (default); use `gated`/`fast` only when explicitly requested
 - Spec link/section (optional)
 - Area labels (optional)
 
@@ -100,6 +101,7 @@ Ask Codex to:
   - no worktree setup
   - no broad verification reruns already reported green
   - output findings first, no command transcript unless a command failed
+  - second review pass only if explicitly requested
 
 ## Common GitHub CLI Snippets
 

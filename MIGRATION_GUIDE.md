@@ -43,6 +43,12 @@ This guide explains how to use this template as the foundation for a new project
 - implementation agent provides reviewer prompt after PR creation
 - reviewer returns only `APPROVED` or `ACTIONABLE`
 - reviewer avoids environment triage loops, worktree setup, and broad verification reruns
+7. Keep execution mode defaults strict:
+- default to `single`
+- use `gated`/`fast` only when explicitly requested
+8. Keep ceremony conditional:
+- second review pass only when explicitly requested
+- decision briefs and doc updates only when behavior/contracts/architecture changed
 
 ## Definition of Ready and Done
 
