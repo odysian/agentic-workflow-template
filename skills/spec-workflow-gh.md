@@ -1,34 +1,34 @@
 # Playbook: Spec Workflow (Codex + GitHub CLI)
 
-Use this when starting a new feature and you want issue bodies + `gh` commands in one run.
+Use this playbook for planning kickoffs that generate issue artifacts with low overhead.
 
-## Invocation Shortcut
+## Canonical Kickoff Types
 
-Example request:
-
-`Run kickoff for feature 3.1 New Messages Divider from docs/specs/frontend-design-audit.md mode=single.`
-
-Default shorthand request:
+### 1) Planning kickoff (feature -> issue artifacts only)
 
 `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
 
-Interpret this shorthand as:
+Interpretation:
 
-- if `mode` omitted, use `mode=single`
-- keep `mode=single` unless `gated` or `fast` is explicitly requested
-- source from `<filename>` (feature section)
-- create/update one Task body file under `plans/`
-- run `gh issue create` directly
-- return terse summary only
+- if `mode` is omitted, use `single`
+- keep `single` unless `gated` or `fast` is explicitly requested
+- planning-only: no code changes, no PR creation
+- source content from the requested feature section in `<filename>`
 
-## Inputs
+### 2) Execution kickoff (existing Task -> implementation)
+
+`Run kickoff for existing Task #<task-id> mode=single.`
+
+Execution kickoff is handled by `docs/template/KICKOFF.md`.
+
+## Planning Inputs
 
 - Feature identifier/title
 - Mode: `single` (default); use `gated`/`fast` only when explicitly requested
 - Spec link/section (optional)
 - Area labels (optional)
 
-## Output Requirements
+## Planning Output Requirements
 
 1. `mode=single` (default):
 - one Task markdown body for end-to-end implementation
@@ -44,31 +44,27 @@ Interpret this shorthand as:
 - suggested labels
 - acceptance criteria with backend/frontend/tests/docs checkboxes
 - `Parent Spec: (placeholder)` only in `mode=gated`
-5. Final execution step for issue modes:
-- start Task `#<id>` in a new branch and open PR with `Closes #<id>`
-- provide a lean reviewer follow-up prompt after PR creation
+5. Planning response includes:
+- files written
+- created issue link(s), when applicable
+- exact `gh issue create` command(s), when applicable
+- concise 3-5 step implementation plan
 
 ## Procedure
 
-### Single-Mode Automation Defaults (No-Chatter)
+### Planning Automation Defaults (No-Chatter)
 
-When the shorthand request is used, default to this non-interactive behavior:
+When planning shorthand is used, default to this non-interactive behavior:
 
-1. Use the current branch. Do not switch branches unless explicitly asked.
+1. Keep current branch (planning-only behavior).
 2. Do not run preflight discovery commands by default (`gh auth status`, `gh label list`, broad repo scans).
-3. Write one Task issue body file under `plans/`:
-- `plans/task-<feature-slug>-01.md`
-4. Run `gh issue create` directly with the labels inferred from scope.
-5. Only ask follow-up questions on hard failures (auth, permissions, missing required labels).
-6. Output only:
-- issue number + URL
-- file written
-- 3-5 bullet implementation plan
-- exact `gh issue create` command used
+3. Write issue body file(s) under `plans/`:
+- `plans/task-<feature-slug>-01.md` (`single`)
+- `plans/spec-<feature-slug>.md` + `plans/task-<feature-slug>-01.md` (`gated`)
+4. Run `gh issue create` directly for `single`/`gated` unless blocked by auth/permissions/missing required labels.
+5. Ask follow-up questions only for hard blockers.
 
-### A) Draft issue body content (text generation)
-
-Ask Codex to:
+### A) Draft issue body content
 
 - choose mode from criteria in `ISSUES_WORKFLOW.md`
 - for `single`: generate one end-to-end Task body
@@ -79,35 +75,17 @@ Ask Codex to:
 
 ### B) Generate GitHub CLI commands
 
-Ask Codex to output:
-
-- mode-specific filenames to save locally:
-  - `task-<feature>-01.md` (`single`)
-  - `spec-<feature>.md` + `task-<feature>-01.md` (`gated`)
+- mode-specific filenames:
+  - `plans/task-<feature>-01.md` (`single`)
+  - `plans/spec-<feature>.md` + `plans/task-<feature>-01.md` (`gated`)
 - mode-specific `gh issue create` commands using `--body-file` and `--label`
 
-You run those commands in the repo terminal.
+### C) Execute planned Task (separate kickoff)
 
-### C) Execute a Task
-
-Ask Codex to:
-
-- start Task `#<id>` in a new branch
-- implement and verify
-- open PR containing `Closes #<id>`
-- provide reviewer follow-up prompt with explicit constraints:
-  - major bugs/regressions + missing tests/docs only
-  - no environment triage loops
-  - no worktree setup
-  - no broad verification reruns already reported green
-  - output findings first, no command transcript unless a command failed
-  - second review pass only if explicitly requested
+After issue creation, run the execution kickoff from `docs/template/KICKOFF.md`.
+Execution must create/switch to dedicated branch `task-<id>-<slug>` before implementation.
 
 ## Common GitHub CLI Snippets
 
-```bash
-gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file task-<feature>-01.md
-gh issue create --title "Spec: <feature set>" --label "type:spec" --body-file spec-<feature-set>.md
-gh issue list --label type:task
-gh issue view <id>
-```
+Use the canonical command examples in `ISSUES_WORKFLOW.md` under `Common GitHub CLI Commands`.
+Do not duplicate command blocks in this playbook.

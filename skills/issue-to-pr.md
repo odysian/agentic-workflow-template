@@ -15,11 +15,8 @@ Given a Task issue:
 9. Run a follow-up review pass only if explicitly requested.
 10. Update docs and ADR links when applicable.
 
-Reviewer prompt should require:
-
-1. Verdict: `APPROVED` or `ACTIONABLE`
-2. Findings (if actionable): severity, file/path:line, issue, required fix
-3. Residual risk/testing gaps (max 3 bullets)
+Use `docs/template/KICKOFF.md` as the canonical reviewer prompt/output source.
+Do not restate the reviewer output schema in this file.
 
 Reviewer constraints:
 

@@ -4,10 +4,11 @@ This folder is the project-agnostic baseline for an agentic workflow.
 
 ## 5-Minute Setup
 
-1. Copy `template/base/` into a new repo root.
+1. Create a new repo from this template (or copy the template root docs/folders into your repo).
 2. Replace all required tokens before any implementation work.
-3. Confirm verify commands run locally and in CI.
-4. Start work through GitHub Issues: Spec -> Task -> PR.
+3. Pin runtime/toolchain versions (for example Node/Python) and align local + CI.
+4. Confirm verify commands run locally and in CI.
+5. Start work through GitHub Issues by default: `Task -> PR`; use `Spec -> Task -> PR` only when scope/risk requires it. Use `fast` mode only when explicitly requested and criteria are met.
 
 ## Required Tokens
 
@@ -26,8 +27,16 @@ Replace these in the base files:
 ## Workflow Source of Truth
 
 - Execution control plane: `ISSUES_WORKFLOW.md`
-- Engineering workflow: `WORKFLOW.md`
-- Agent constraints: `AGENTS.md`
+- Kickoff/reviewer prompt contract: `docs/template/KICKOFF.md`
+- Engineering workflow summary: `WORKFLOW.md`
+- Agent constraints/onboarding: `AGENTS.md`
+- Greenfield baseline: `GREENFIELD_BLUEPRINT.md`
+
+Default must-read order for agents:
+1. `AGENTS.md`
+2. `ISSUES_WORKFLOW.md`
+3. `docs/template/KICKOFF.md`
+4. `WORKFLOW.md`
 
 `TASKS.md` (if present) is a local scratchpad only.
 

@@ -14,15 +14,16 @@
 
 1. Open a Spec issue for meaningful template changes.
 2. Split into Task issues and merge PRs that close Tasks.
-3. Update `VERSION.md` based on semantic versioning.
-4. Add short release notes in the Git tag annotation.
-5. Create annotated tag:
+3. Run template token guard: `./scripts/check-unresolved-template-tokens.sh`.
+4. Update `docs/template/VERSION.md` based on semantic versioning.
+5. Add short release notes in the Git tag annotation.
+6. Create annotated tag:
 
 ```bash
 git tag -a vX.Y.Z -m "template release vX.Y.Z"
 ```
 
-6. Push commits and tags:
+7. Push commits and tags:
 
 ```bash
 git push origin main

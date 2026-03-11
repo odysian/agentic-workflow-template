@@ -4,44 +4,46 @@
 
 `AGENTS.md` is the canonical entrypoint for agents and contributors in this repository.
 
-Read in this order:
+Must-read in this order:
 1. `AGENTS.md` (this file)
-2. `WORKFLOW.md`
-3. `ISSUES_WORKFLOW.md`
-4. `ARCHITECTURE.md` (if present)
-5. `PATTERNS.md` (if present)
-6. `REVIEW_CHECKLIST.md` (if present)
-7. `skills/write-spec.md` (if present)
-8. `skills/spec-to-issues.md` (if present)
-9. `skills/issue-to-pr.md` (if present)
-10. `skills/spec-workflow-gh.md` (if present)
+2. `ISSUES_WORKFLOW.md`
+3. `docs/template/KICKOFF.md` (if present)
+4. `WORKFLOW.md`
+
+Read conditionally (only when relevant):
+- `GREENFIELD_BLUEPRINT.md` for greenfield repos or explicit restructuring tasks
+- `docs/README.md`, `docs/ARCHITECTURE.md`, `docs/PATTERNS.md`, `docs/REVIEW_CHECKLIST.md` for domain/contract/pattern changes
+- `skills/*` playbooks only when explicitly requested or clearly required by the task
 
 ## Unit of Work Rule
 
-- **Unit of work is a GitHub Issue.**
+- **Default unit of work is a GitHub Issue.**
 - Use `single` mode by default: one feature -> one Task issue -> one PR.
 - Use `gated` or `fast` only when the user explicitly requests it.
+- In `fast` mode, no issue creation is required (per `ISSUES_WORKFLOW.md` criteria).
 - Convert freeform requests into the selected issue mode before implementation.
-- Work one Task issue at a time.
+- For issue-backed work, work one Task issue at a time.
 - PRs close Task issues (`Closes #123`), not Specs.
 - Specs close only when all child Tasks are done or explicitly deferred.
 - Detailed control-plane rules are canonical in `ISSUES_WORKFLOW.md`.
 - For one-shot issue body + `gh` command generation, use `skills/spec-workflow-gh.md`.
-- Canonical single-line kickoff prompt:
-  - `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>.`
+- Canonical kickoff types:
+  - Planning kickoff (issue planning only): `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>, planning-only (no code changes, no PR).`
+  - Execution kickoff (implementation): `Run kickoff for existing Task #<task-id> mode=single.`
   - If `mode` is omitted, default to `single`.
   - Do not switch to `gated` or `fast` unless explicitly requested.
-  - Expected output: issue body file(s), `gh issue create` command(s), created issue link(s), and a 3-5 step implementation plan.
+  - Planning kickoff output: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), and a 3-5 step implementation plan.
+  - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt.
 
 ## Agent Operating Loop
 
 1. Whiteboard scope in `plans/*.md` or spec docs (scratch only).
-2. Choose execution mode and create required issue(s) (`single` unless explicitly asked for `gated`/`fast`).
+2. Choose execution mode and create required issue(s) (`single` unless explicitly asked for `gated`/`fast`; `fast` can skip issue creation).
 3. Restate goal and acceptance criteria.
 4. Plan minimal files and scope.
 5. Implement with tight, surgical changes.
 6. Run verification commands once (or once per code change set).
-7. Open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
+7. For issue-backed work, open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
 8. Provide a lean reviewer follow-up prompt for a separate review pass.
 9. Patch only actionable findings, rerun relevant verification, and finalize.
 
@@ -61,13 +63,21 @@ Read in this order:
 - Do not modify applied migrations; create a new migration.
 - Keep code review lean: focus on major bugs/regressions and missing tests.
 - In review mode, avoid environment triage loops, worktree setup, and repeated full-suite verification unless a blocker requires it.
+- For no-contract refactors, use the parity lock checklist (status/shape/error/side-effects) before merge.
+- Keep runtime/toolchain contracts explicit and consistent across README, local verify commands, and CI.
 
-## Frontend Modularity Default
+## Codebase Modularity Defaults
 
-- Default for new projects: use a feature-first frontend structure: `src/features/<feature>/{components,hooks,services,types,tests}` and `src/shared/{components,hooks,lib,types}`.
+- Default for greenfield repos: follow `GREENFIELD_BLUEPRINT.md`.
+- Backend layering default: `api -> services -> repositories -> integrations/libs`.
+- Frontend layering default: `src/app` route shells + `src/features/<feature>` + `src/shared`.
 - Keep feature boundaries explicit: feature internals stay private; cross-feature usage should go through public exports.
 - If a repo already uses a different structure, preserve it unless a dedicated migration task explicitly scopes restructuring.
-- Practical file-size budgets: target `<=250` LOC for leaf components and `<=180` LOC for single-purpose hooks/services; `300-400` LOC can be acceptable when cohesive; require split or linked follow-up when a component exceeds `450` LOC or a hook/service exceeds `300` LOC.
+- Practical file-size budgets:
+  - frontend components target `<=250` LOC
+  - frontend hooks/services target `<=180` LOC
+  - backend route/service/repository modules target `<=220` LOC
+  - split or create linked follow-up when any frontend module exceeds `450/300` LOC (component vs hook/service) or backend route/service/repository exceeds `350` LOC
 
 ## Decision Brief (Conditional)
 
@@ -82,10 +92,12 @@ For tiny quick fixes with no contract change, decision brief is optional.
 
 ## Workflow Order
 
-1. Read `WORKFLOW.md`
-2. Read `ISSUES_WORKFLOW.md`
-3. Read project docs in `{{DOCS_PATHS}}`
-4. Execute one ready Task issue
+1. Read `ISSUES_WORKFLOW.md`
+2. Read `docs/template/KICKOFF.md`
+3. Read `WORKFLOW.md`
+4. Read `GREENFIELD_BLUEPRINT.md` only for greenfield/restructure tasks
+5. Read project docs in `{{DOCS_PATHS}}` only when needed for touched scope
+6. Execute one ready Task issue
 
 ## Reviewer Handoff Contract
 
@@ -94,7 +106,6 @@ After implementation PR is open, the implementation agent provides a reviewer pr
 - Task/PR identifier and branch/base
 - verification already run
 - explicit request for `APPROVED` or `ACTIONABLE`
-- findings format: severity, file/path:line, issue, required fix
 
 Reviewer pass default constraints:
 
@@ -104,6 +115,8 @@ Reviewer pass default constraints:
 - no rerun of broad verification already reported green
 - no command transcript in output unless a command failed
 - default to one review pass; run a second pass only if the user explicitly requests it
+
+Use the exact reviewer prompt/output contract from `docs/template/KICKOFF.md`.
 
 ## Verification
 
@@ -143,7 +156,12 @@ Treat doc updates like failing tests. Keep architecture, patterns, checklists, a
 
 Keep external skills high-signal and conflict-free:
 
-- Precedence order: `AGENTS.md` -> `WORKFLOW.md` -> `ISSUES_WORKFLOW.md` -> local `skills/*` -> external installed skills.
+- Rule ownership:
+  - execution control plane (modes/DoR/DoD/branching): `ISSUES_WORKFLOW.md` (authoritative)
+  - kickoff and reviewer output contract: `docs/template/KICKOFF.md` (authoritative)
+  - implementation loop and quality defaults: `WORKFLOW.md`
+  - onboarding and operating constraints: `AGENTS.md`
+- For skills, precedence order is: repo docs above -> local `skills/*` -> external installed skills.
 - Install external skills globally in Codex home, not inside project repos.
 - Keep a small baseline (about 4-6 active external skills).
 - Use skills intentionally (named skill or clear task match), not by default for every request.
