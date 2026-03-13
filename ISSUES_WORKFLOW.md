@@ -95,6 +95,7 @@ A Task is done when:
 - verification commands pass
 - tests for the feature are included in the same Task by default
 - docs are updated when behavior/contracts changed
+- changed code complies with `docs/CODE_COMMENTING_CONTRACT.md`
 - follow-up issues are created for deferred work
 - reviewer follow-up is complete with verdict and actionable findings addressed or deferred explicitly
 - boundary/layer guardrail checks pass when applicable
@@ -118,6 +119,8 @@ Use project commands:
 ```
 
 Prefer repo-level verify entrypoints when available (for example: `make backend-verify`, `make frontend-verify`).
+
+When a Makefile verify contract exists (see `WORKFLOW.md`), use those canonical targets in Task verification sections.
 
 ## Codex + GitHub CLI Playbook
 

@@ -24,6 +24,18 @@ Replace these in the base files:
 - `{{DOCS_PATHS}}`
 - `{{CI_LINKS_OR_NOTES}}`
 
+## Makefile Verify Contract (Recommended)
+
+If your repo uses `make` as the verification entrypoint, define:
+
+- `make verify`
+- `make backend-verify`
+- `make frontend-verify`
+- `make db-verify` (if applicable)
+- `make template-verify` (for template checks, for example unresolved-token guard)
+
+Keep these targets deterministic, non-interactive, and CI-aligned with local usage.
+
 ## Workflow Source of Truth
 
 - Execution control plane: `ISSUES_WORKFLOW.md`

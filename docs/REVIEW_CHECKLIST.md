@@ -35,6 +35,14 @@
 - [ ] Verification commands pass
 - [ ] Boundary/parity checks are included when relevant
 
+## Code Documentation Contract
+
+- [ ] Changed complex files satisfy module context header requirements (`docs/CODE_COMMENTING_CONTRACT.md`)
+- [ ] Touched public/exported side-effecting behavior has concise docstrings/JSDoc
+- [ ] Non-obvious transaction/concurrency/retry/protocol logic has inline rationale comments
+- [ ] No comment noise or stale/misleading comments introduced
+- [ ] Comment/docstring updates were made where behavior changed
+
 ## Toolchain And Reproducibility
 
 - [ ] Runtime versions are pinned (for example Node/Python version files and `engines` where needed)

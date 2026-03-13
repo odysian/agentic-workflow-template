@@ -71,6 +71,17 @@ For no-contract refactors, keep behavior stable and verify:
 - Backend route/service/repository modules: target `<=220` LOC.
 - If modules exceed defined split thresholds, split or create a linked follow-up Task.
 
+## Code Documentation And Commenting Contract
+
+Follow `docs/CODE_COMMENTING_CONTRACT.md` for comment/docstring requirements.
+
+Default baseline:
+
+- Complex touched files (`>300` LOC or non-obvious orchestration) include a short module context header.
+- Touched public/exported side-effecting behavior includes concise docstrings/JSDoc.
+- Inline comments are used for non-obvious invariants/contracts only.
+- Obvious narration comments are prohibited.
+
 ## Toolchain And Verify Reproducibility
 
 - Pin runtime versions and keep them aligned across:

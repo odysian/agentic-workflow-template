@@ -59,7 +59,7 @@ Review Scope (in priority order):
 2. Contract parity (status codes, response shapes, error semantics, side effects) if scope claims no contract change
 3. Architecture consistency (layer boundaries, dependency direction, service/repository responsibilities)
 4. Security and performance risks introduced by this diff
-5. Missing or weak tests/docs for changed behavior
+5. Missing or weak tests/docs/comment-contract coverage for changed behavior
 
 Constraints:
 - Use local diff and repository context first.

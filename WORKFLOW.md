@@ -155,6 +155,22 @@ For small tasks with no contract/behavior change, decision brief is optional.
 
 Run the relevant checks before claiming completion.
 
+### Makefile Verification Contract (Recommended)
+
+If the repo uses `make` for verification, standardize on these targets:
+
+- `make verify` (full verification aggregator)
+- `make backend-verify` (backend lint/type-check/tests/security checks as applicable)
+- `make frontend-verify` (frontend type-check/tests/lint/build as applicable)
+- `make db-verify` (migrations/schema checks when applicable)
+- `make template-verify` (template-level checks such as unresolved-token guard)
+
+Contract rules:
+
+- Targets must be deterministic, non-interactive, and fail-fast (non-zero exit on failure).
+- CI should run the same `make` targets used locally.
+- Keep target names and scope stable; if changed, update README + workflow docs in the same Task.
+
 ### Full Verification
 
 ```bash
@@ -189,6 +205,8 @@ Run the relevant checks before claiming completion.
 ## Documentation
 
 Update docs only when behavior/contracts/patterns changed.
+
+For in-code documentation and comment quality requirements, follow `docs/CODE_COMMENTING_CONTRACT.md`.
 
 Docs paths:
 

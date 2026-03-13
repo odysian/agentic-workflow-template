@@ -58,6 +58,7 @@ Read conditionally (only when relevant):
 - Keep solutions simple and explicit.
 - Make surgical changes only.
 - Match existing style and conventions.
+- Follow `docs/CODE_COMMENTING_CONTRACT.md` for in-code comment/docstring standards.
 - Do not install dependencies without approval.
 - Do not change unrelated files.
 - Do not modify applied migrations; create a new migration.
@@ -143,6 +144,8 @@ Use the exact reviewer prompt/output contract from `docs/template/KICKOFF.md`.
 ```bash
 {{DB_VERIFY_COMMANDS}}
 ```
+
+If the repo defines a Makefile verification contract, prefer canonical `make` targets (for example: `make verify`, `make backend-verify`, `make frontend-verify`) over ad-hoc command variants.
 
 ## Documentation Discipline
 
