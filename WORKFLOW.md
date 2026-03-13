@@ -34,7 +34,8 @@ Every feature follows:
 4. Verify
 5. Review handoff
 6. Patch (if needed)
-7. Finalize
+7. Learning handoff (after `APPROVED`)
+8. Finalize
 
 ## Operator Flow Optimization
 
@@ -45,7 +46,8 @@ Use this as the default human-in-the-loop sequence to reduce handoff overhead:
 3. Open PR with `Closes #<task-id>`.
 4. Run one reviewer pass using the standardized prompt from `docs/template/KICKOFF.md`.
 5. If verdict is `ACTIONABLE`, patch in the implementation branch and rerun targeted verification only.
-6. Merge PR and sync local branch.
+6. When verdict is `APPROVED` and relayed back to the implementation agent, generate `docs/learning/YYYY-MM-DD-feature-slug-learning.md` using the canonical static header/template.
+7. Merge PR and sync local branch.
 
 ## Issues Workflow (Control Plane)
 
@@ -95,6 +97,7 @@ After implementation and PR creation, run one focused reviewer follow-up pass:
 - Reviewer scope: major correctness bugs, regressions, and missing tests/docs.
 - Reviewer output: `APPROVED` or `ACTIONABLE`.
 - If `ACTIONABLE`, patch findings and rerun only relevant verification.
+- If `APPROVED`, generate the required learning handoff before claiming completion.
 - Default to one review pass; run a second pass only when explicitly requested.
 
 Default reviewer constraints:
@@ -109,6 +112,20 @@ Default reviewer constraints:
 
 Use the robust standard prompt from `docs/template/KICKOFF.md` after opening a Task PR.
 Do not redefine the format in this file; keep `docs/template/KICKOFF.md` as the single source of truth.
+
+## Learning Handoff (Required Completion Gate)
+
+After reviewer verdict `APPROVED` is explicitly relayed back to the implementation agent:
+
+- Write one learning handoff for the completed unit (`Task` completion and `Spec` closure) at `docs/learning/YYYY-MM-DD-feature-slug-learning.md`.
+- Copy the static tutoring header from `docs/template/KICKOFF.md` verbatim at the top; do not edit header text.
+- Fill required sections below the header in plain English:
+  - `What Was Built` (2-3 sentences)
+  - `Top 3 Decisions and Why`
+  - `Non-Obvious Patterns Used`
+  - `Tradeoffs Evaluated`
+  - `What I'm Uncertain About` (coin-flip decisions, what would change with more context, unhandled edge cases and why)
+  - `Relevant Code Pointers` using `filename > line number` format
 
 ## Planning And Scope
 

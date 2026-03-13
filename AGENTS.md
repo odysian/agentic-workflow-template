@@ -33,7 +33,7 @@ Read conditionally (only when relevant):
   - If `mode` is omitted, default to `single`.
   - Do not switch to `gated` or `fast` unless explicitly requested.
   - Planning kickoff output: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), and a 3-5 step implementation plan.
-  - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt.
+  - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt + required learning handoff after explicit `APPROVED`.
 
 ## Agent Operating Loop
 
@@ -45,7 +45,9 @@ Read conditionally (only when relevant):
 6. Run verification commands once (or once per code change set).
 7. For issue-backed work, open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
 8. Provide a lean reviewer follow-up prompt for a separate review pass.
-9. Patch only actionable findings, rerun relevant verification, and finalize.
+9. Patch only actionable findings, rerun relevant verification, and repeat review only if explicitly requested.
+10. After explicit reviewer verdict `APPROVED` is relayed back, generate a learning handoff file in `docs/learning/` (format defined below).
+11. Finalize: include handoff path in completion output and then close/complete the Task or Spec as applicable.
 
 ## Project Context
 
@@ -118,6 +120,28 @@ Reviewer pass default constraints:
 - default to one review pass; run a second pass only if the user explicitly requests it
 
 Use the exact reviewer prompt/output contract from `docs/template/KICKOFF.md`.
+
+## Learning Handoff Contract
+
+Required completion gate:
+
+- Generate a learning handoff whenever a Task is finished and whenever a Spec is closed.
+- Trigger only after explicit reviewer verdict `APPROVED` is provided back to the implementation agent.
+- Write to `docs/learning/YYYY-MM-DD-feature-slug-learning.md` (create `docs/learning/` if missing).
+- The static tutoring header from `docs/template/KICKOFF.md` is mandatory and must be copied verbatim at the top of the file; never modify it.
+- Audience and writing style are fixed by that header: senior-to-junior explanation for web chat with no IDE access; plain English, no agent shorthand.
+
+Required sections below the static header:
+
+- `## What Was Built` (2-3 sentences)
+- `## Top 3 Decisions and Why`
+- `## Non-Obvious Patterns Used`
+- `## Tradeoffs Evaluated`
+- `## What I'm Uncertain About`
+  - Any decisions that felt like a coin flip
+  - Anything I'd do differently with more context
+  - Edge cases I didn't handle and why
+- `## Relevant Code Pointers` using `filename > line number` format so the handoff works in web chat contexts
 
 ## Verification
 
