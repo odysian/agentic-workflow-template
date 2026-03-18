@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+required_paths=(
+  "AGENTS.md"
+  "WORKFLOW.md"
+  "ISSUES_WORKFLOW.md"
+  "GREENFIELD_BLUEPRINT.md"
+  "docs/PATTERNS.md"
+  "docs/REVIEW_CHECKLIST.md"
+  "docs/template/KICKOFF.md"
+  "docs/template/MIGRATION_GUIDE.md"
+  "docs/template/PROJECT_SETUP.md"
+  "docs/template/VERTICAL_SLICE_SPEC.md"
+  "docs/template/SCAFFOLD_KICKOFF.md"
+  ".github/ISSUE_TEMPLATE/spec.md"
+  ".github/ISSUE_TEMPLATE/task.md"
+  ".github/PULL_REQUEST_TEMPLATE.md"
+  "scripts/check-unresolved-template-tokens.sh"
+  "scripts/gh_preflight.sh"
+  "scripts/create_pr.sh"
+)
+
+required_exec=(
+  "scripts/check-unresolved-template-tokens.sh"
+  "scripts/gh_preflight.sh"
+  "scripts/create_pr.sh"
+)
+
+missing=()
+for path in "${required_paths[@]}"; do
+  [[ -f "$path" ]] || missing+=("$path")
+done
+
+if ((${#missing[@]} > 0)); then
+  echo "Template preflight FAILED: missing required files:"
+  printf '  - %s\n' "${missing[@]}"
+  exit 1
+fi
+
+not_exec=()
+for path in "${required_exec[@]}"; do
+  [[ -x "$path" ]] || not_exec+=("$path")
+done
+
+if ((${#not_exec[@]} > 0)); then
+  echo "Template preflight FAILED: required scripts are not executable:"
+  printf '  - %s\n' "${not_exec[@]}"
+  exit 1
+fi
+
+echo "Template preflight PASS"

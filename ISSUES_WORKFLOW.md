@@ -2,9 +2,11 @@
 
 This repository uses GitHub issues as the execution control plane.
 
+Downstream repos should record template baseline version and adoption date in repo docs (for example `AGENTS.md` or `MIGRATION_GUIDE.md`).
+
 ## Workflow Loop
 
-1. Whiteboard feature ideas in `plans/*.md` or spec docs (scratch planning).
+1. Whiteboard feature ideas in `plans/YYYY-MM-DD/*.md` or spec docs (scratch planning).
 2. Document work as issues using one of the execution modes below.
 3. Implement and close Task issues via PRs (`Closes #...`).
 4. Finalize by updating docs only when behavior/contracts changed and close related Spec/tracker issues.
@@ -202,8 +204,8 @@ Use the exact output contract in `docs/template/KICKOFF.md` (single source of tr
 This section is the canonical command snippet source for issue operations.
 
 ```bash
-gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file plans/task-<feature>-01.md
-gh issue create --title "Spec: <feature set>" --label "type:spec" --body-file plans/spec-<feature-set>.md
+gh issue create --title "Task: <feature> end-to-end" --label "type:task,area:frontend" --body-file plans/YYYY-MM-DD/task-<feature>-01.md
+gh issue create --title "Spec: <feature set>" --label "type:spec" --body-file plans/YYYY-MM-DD/spec-<feature-set>.md
 gh issue list --label type:task
 gh issue view <id>
 ```

@@ -6,6 +6,11 @@
 - **Stack:** `{{STACK_SUMMARY}}`
 - **Repo layout:** `{{REPO_STRUCTURE_OVERVIEW}}`
 
+## Workflow Metadata
+
+- Template baseline at scaffold time: `agentic-workflow-template v0.3.0`.
+- Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
+
 ## Source Of Truth (By Rule Type)
 
 - Execution control plane (modes, DoR/DoD, branching, issue lifecycle): `ISSUES_WORKFLOW.md` (authoritative)

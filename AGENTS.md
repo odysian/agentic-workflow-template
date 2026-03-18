@@ -37,7 +37,7 @@ Read conditionally (only when relevant):
 
 ## Agent Operating Loop
 
-1. Whiteboard scope in `plans/*.md` or spec docs (scratch only).
+1. Whiteboard scope in `plans/YYYY-MM-DD/*.md` or spec docs (scratch only). New planning files should follow `plans/YYYY-MM-DD/<type>-<slug>.md`.
 2. Choose execution mode and create required issue(s) (`single` unless explicitly asked for `gated`/`fast`; `fast` can skip issue creation).
 3. Restate goal and acceptance criteria.
 4. Plan minimal files and scope.
@@ -54,6 +54,11 @@ Read conditionally (only when relevant):
 - **Project:** `{{PROJECT_NAME}}`
 - **Stack:** `{{STACK_SUMMARY}}`
 - **Repo layout:** `{{REPO_STRUCTURE_OVERVIEW}}`
+
+## Workflow Metadata
+
+- Template baseline at scaffold time: `agentic-workflow-template v0.3.0`.
+- Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Operating Rules
 

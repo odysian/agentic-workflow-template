@@ -13,6 +13,9 @@ Use this index to keep template docs easy to traverse.
 
 - `template/START_HERE.md`
 - `template/KICKOFF.md`
+- `template/PROJECT_SETUP.md`
+- `template/VERTICAL_SLICE_SPEC.md`
+- `template/SCAFFOLD_KICKOFF.md`
 - `template/MIGRATION_GUIDE.md`
 - `template/RELEASE_STRATEGY.md`
 - `template/VERSION.md`

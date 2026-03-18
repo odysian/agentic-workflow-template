@@ -8,28 +8,40 @@ This guide explains how to use this template as the foundation for a new project
 - Core workflow (`WORKFLOW.md`)
 - Issue-driven execution control plane (`ISSUES_WORKFLOW.md`)
 - Canonical kickoff/review prompts (`docs/template/KICKOFF.md`)
+- Planning templates:
+  - `docs/template/PROJECT_SETUP.md`
+  - `docs/template/VERTICAL_SLICE_SPEC.md`
+  - `docs/template/SCAFFOLD_KICKOFF.md`
 - Documentation skeletons (`docs/ARCHITECTURE.md`, `docs/PATTERNS.md`, `docs/REVIEW_CHECKLIST.md`)
 - GitHub issue templates and PR template (`.github/`)
+- Workflow helper scripts (`scripts/gh_preflight.sh`, `scripts/create_pr.sh`)
+- Template integrity checks (`scripts/template_preflight.sh`, `scripts/check-unresolved-template-tokens.sh`)
 - Portable playbooks in `skills/`
 
 ## Part 1: New Project Setup (recommended)
 
 1. Create a new repo from this template repository.
-2. Replace all token placeholders before implementation: `{{PROJECT_NAME}}`, `{{STACK_SUMMARY}}`, `{{REPO_STRUCTURE_OVERVIEW}}`, `{{VERIFY_COMMANDS}}`, `{{FRONTEND_VERIFY_COMMANDS}}`, `{{BACKEND_VERIFY_COMMANDS}}`, `{{DB_VERIFY_COMMANDS}}`, `{{DOCS_PATHS}}`, `{{CI_LINKS_OR_NOTES}}`.
-3. Confirm verification commands run locally.
-4. Configure GitHub labels and board.
-5. Start with a Task issue by default (`single` mode); use Spec + Tasks only when scope/risk requires `gated` mode.
+2. Run `./scripts/template_preflight.sh` and resolve any missing assets.
+3. Replace all token placeholders before implementation: `{{PROJECT_NAME}}`, `{{STACK_SUMMARY}}`, `{{REPO_STRUCTURE_OVERVIEW}}`, `{{VERIFY_COMMANDS}}`, `{{FRONTEND_VERIFY_COMMANDS}}`, `{{BACKEND_VERIFY_COMMANDS}}`, `{{DB_VERIFY_COMMANDS}}`, `{{DOCS_PATHS}}`, `{{CI_LINKS_OR_NOTES}}`.
+4. Create project-specific planning docs from templates:
+   - `PROJECT_SETUP.md` (stack/runtime/dependencies/env/contracts)
+   - `VERTICAL_SLICE_SPEC.md` (narrow validation scope)
+   - `SCAFFOLD_KICKOFF.md` (scaffolding-only execution constraints)
+5. Confirm verification commands run locally.
+6. Configure GitHub labels and board.
+7. Record template baseline version and adoption date in repo docs.
+8. Use planning artifact paths as `plans/YYYY-MM-DD/<type>-<slug>.md`.
+9. Start with a Task issue by default (`single` mode); use Spec + Tasks only when scope/risk requires `gated` mode.
 
 ## Part 2: Existing Project Adoption
 
-1. Copy the template files into the existing repo.
+1. Copy template files into the existing repo.
 2. Merge carefully with existing docs (do not overwrite project-specific rules).
 3. Reconcile contradictions first (verification commands, auth pattern statements, test plan claims).
 4. Decide source of truth: for issue-backed work (`single`/`gated`), GitHub Issues = execution control plane, `TASKS.md` = optional scratchpad only.
 5. Roll out in two phases: Phase A = docs/templates only, Phase B = enforce in active work (`Task -> PR` by default; `Spec -> Task -> PR` when needed).
-6. Set review policy to lean follow-up by default: implementation agent provides reviewer prompt after PR creation, reviewer returns only `APPROVED` or `ACTIONABLE`, and reviewer avoids environment triage/worktree/broad verify reruns.
-7. Keep execution mode defaults strict: default to `single`; use `gated`/`fast` only when explicitly requested.
-8. Keep ceremony conditional: second review pass only when explicitly requested; decision briefs and doc updates only when behavior/contracts/architecture changed.
+6. Keep execution mode defaults strict: default to `single`; use `gated`/`fast` only when explicitly requested.
+7. Keep ceremony conditional: second review pass only when explicitly requested; decision briefs and doc updates only when behavior/contracts/architecture changed.
 
 Recommended onboarding order for agents:
 1. `AGENTS.md`

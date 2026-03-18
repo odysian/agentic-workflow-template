@@ -1,4 +1,4 @@
-name: Template Token Guard
+name: Template Guard
 
 on:
   pull_request:
@@ -7,11 +7,14 @@ on:
       - main
 
 jobs:
-  unresolved-token-guard:
+  template-guard:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Preflight required template assets
+        run: ./scripts/template_preflight.sh
 
       - name: Fail on unresolved tokens in non-template files
         run: ./scripts/check-unresolved-template-tokens.sh

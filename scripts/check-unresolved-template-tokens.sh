@@ -10,7 +10,7 @@ is_allowed_path() {
   local path="$1"
   case "$path" in
     AGENTS.md|WORKFLOW.md|ISSUES_WORKFLOW.md|GREENFIELD_BLUEPRINT.md) return 0 ;;
-    docs/ARCHITECTURE.md|docs/PATTERNS.md|docs/REVIEW_CHECKLIST.md) return 0 ;;
+    docs/ARCHITECTURE.md|docs/PATTERNS.md|docs/REVIEW_CHECKLIST.md|docs/CODE_COMMENTING_CONTRACT.md) return 0 ;;
     docs/template/*.md) return 0 ;;
     .github/PULL_REQUEST_TEMPLATE.md|.github/ISSUE_TEMPLATE/*.md) return 0 ;;
     *) return 1 ;;
