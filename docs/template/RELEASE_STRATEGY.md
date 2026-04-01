@@ -2,14 +2,15 @@
 
 ## Current Release
 
-- Current baseline tag: `v0.3.0`
-- Scope: scaffold hardening templates (`PROJECT_SETUP`, `VERTICAL_SLICE_SPEC`, `SCAFFOLD_KICKOFF`), required GH helper scripts, and template preflight validation.
+- Current baseline tag: `v0.4.0`
+- Scope: workflow refresh (reviewer-owned tutoring handoff, planning checkpoint, selective test-first, stateful/cross-layer Behavior Matrix, stronger review contract, Copilot guidance).
 
 ## Release History (Short)
 
 - `v0.1.0`: base workflow docs, issue templates, PR template, skills playbooks, migration guide.
 - `v0.2.0`: lean implementation -> PR -> reviewer prompt flow, focused review constraints, and streamlined review reporting requirements.
 - `v0.3.0`: scaffold hardening templates + template preflight + required GH helper scripts + standardized dated plans convention examples.
+- `v0.4.0`: reviewer-owned in-chat learning handoff; planning `Why this approach`; conditional Behavior Matrix; selective test-first and DoR/DoD tightening; `tight boundaries, loose middle`; expanded reviewer parity/CI guidance; `.github/copilot-instructions.md`.
 
 ## Ongoing Release Process
 
