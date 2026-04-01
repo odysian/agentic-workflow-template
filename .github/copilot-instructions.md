@@ -12,7 +12,7 @@ Focus review comments on real engineering signal, not workflow ceremony.
 ## Do not
 
 - Treat normal workflow steps (planning checkpoints, lightweight tutoring handoffs in chat, issue/PR hygiene) as code defects
-- Generate or demand learning handoffs as part of review triage; that belongs to the human reviewer's `APPROVED` response per `docs/template/KICKOFF.md`
+- Generate or demand learning handoffs as part of review triage; that belongs to the approved reviewer's `APPROVED` response per `docs/template/KICKOFF.md`
 - Suggest opportunistic large refactors or broad pattern rewrites during review unless the Task explicitly scoped them
 - Expand scope beyond the approved Task
 
