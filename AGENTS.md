@@ -32,8 +32,8 @@ Read conditionally (only when relevant):
   - Execution kickoff (implementation): `Run kickoff for existing Task #<task-id> mode=single.`
   - If `mode` is omitted, default to `single`.
   - Do not switch to `gated` or `fast` unless explicitly requested.
-  - Planning kickoff output: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), and a 3-5 step implementation plan.
-  - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt + required learning handoff after explicit `APPROVED`.
+  - Planning kickoff output: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), a 3-5 step implementation plan, and the short `Why this approach` checkpoint from `docs/template/KICKOFF.md` (immediately before issue-ready markdown).
+  - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt + final completion after explicit `APPROVED`, with the lightweight tutoring handoff generated once by the approving reviewer in that same response.
 
 ## Agent Operating Loop
 
@@ -46,8 +46,8 @@ Read conditionally (only when relevant):
 7. For issue-backed work, open PR that closes the Task issue; close Spec after child Tasks are done/deferred.
 8. Provide a lean reviewer follow-up prompt for a separate review pass.
 9. Patch only actionable findings, rerun relevant verification, and repeat review only if explicitly requested.
-10. After explicit reviewer verdict `APPROVED` is relayed back, generate a learning handoff file in `docs/learning/` (format defined below).
-11. Finalize: include handoff path in completion output and then close/complete the Task or Spec as applicable.
+10. After explicit reviewer verdict `APPROVED`, finalize the Task or Spec; do not generate a second lightweight tutoring handoff after approval is relayed back.
+11. Finalize: return the completion output and then close/complete the Task or Spec as applicable.
 
 ## Project Context
 
@@ -57,11 +57,12 @@ Read conditionally (only when relevant):
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.3.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.4.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Operating Rules
 
+- **Tight boundaries, loose middle:** be strict about scope, contracts, acceptance criteria, verification, and layer boundaries. Be flexible about internal decomposition and helper structure as long as the implementation stays readable, testable, and consistent with repo patterns.
 - Keep solutions simple and explicit.
 - Make surgical changes only.
 - Match existing style and conventions.
@@ -73,6 +74,7 @@ Read conditionally (only when relevant):
 - In review mode, avoid environment triage loops, worktree setup, and repeated full-suite verification unless a blocker requires it.
 - For no-contract refactors, use the parity lock checklist (status/shape/error/side-effects) before merge.
 - Keep runtime/toolchain contracts explicit and consistent across README, local verify commands, and CI.
+- For bug fixes, backend business logic, contract-sensitive behavior, and stateful/cross-layer changes, identify the first test/assertion to add before implementation when practical. This is guidance for higher-risk work, not strict TDD.
 
 ## Codebase Modularity Defaults
 
@@ -123,6 +125,7 @@ Reviewer pass default constraints:
 - no rerun of broad verification already reported green
 - no command transcript in output unless a command failed
 - default to one review pass; run a second pass only if the user explicitly requests it
+- if verdict is `APPROVED`, the approving reviewer ends that same response with the lightweight tutoring handoff, generated once
 
 Use the exact reviewer prompt/output contract from `docs/template/KICKOFF.md`.
 
@@ -130,23 +133,18 @@ Use the exact reviewer prompt/output contract from `docs/template/KICKOFF.md`.
 
 Required completion gate:
 
-- Generate a learning handoff whenever a Task is finished and whenever a Spec is closed.
-- Trigger only after explicit reviewer verdict `APPROVED` is provided back to the implementation agent.
-- Write to `docs/learning/YYYY-MM-DD-feature-slug-learning.md` (create `docs/learning/` if missing).
-- The static tutoring header from `docs/template/KICKOFF.md` is mandatory and must be copied verbatim at the top of the file; never modify it.
-- Audience and writing style are fixed by that header: senior-to-junior explanation for web chat with no IDE access; plain English, no agent shorthand.
-
-Required sections below the static header:
-
-- `## What Was Built` (2-3 sentences)
-- `## Top 3 Decisions and Why`
-- `## Non-Obvious Patterns Used`
-- `## Tradeoffs Evaluated`
-- `## What I'm Uncertain About`
-  - Any decisions that felt like a coin flip
-  - Anything I'd do differently with more context
-  - Edge cases I didn't handle and why
-- `## Relevant Code Pointers` using `filename > line number` format so the handoff works in web chat contexts
+- Post a lightweight tutoring handoff whenever a Task is finished and whenever a Spec is closed.
+- The handoff is generated once, by the approving reviewer, in the same `APPROVED` response.
+- Do not generate a second learning handoff after approval is relayed back; the implementation agent finalizes after approval.
+- Post it directly in the same chat/thread; do not create a separate markdown handoff unless explicitly requested.
+- Keep it brief, tutor-style, and practical rather than archival.
+- Required shape:
+  - 4 short bullets covering:
+    - what changed
+    - why it was done this way
+    - one tradeoff or pattern worth learning
+    - what to review first
+  - 3-6 code pointers using `path:line-line — why it matters` format
 
 ## Verification
 

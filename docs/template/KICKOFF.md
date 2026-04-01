@@ -14,12 +14,21 @@ Then execute the full Task flow end-to-end:
 4. Run relevant verification once after implementation.
 5. Open PR with `Closes #<task-id>`.
 6. Return the standardized reviewer follow-up prompt from section 3 below.
-7. After review verdict is relayed back:
+7. After review verdict:
    - if verdict is `ACTIONABLE`: patch required fixes and rerun targeted verification only.
-   - if verdict is `APPROVED`: write `docs/learning/YYYY-MM-DD-feature-slug-learning.md` using section 4 below, then return the file path and final completion summary.
+   - if verdict is `APPROVED`: finalize the Task and return the final completion summary; do not generate a second lightweight tutoring handoff after approval is relayed back.
+8. If the Task touches state transitions, action availability, external side effects, or contract/error semantics, include a short Behavior Matrix before implementation.
+
+Behavior Matrix (required when the Task is stateful or cross-layer):
+- States/statuses involved and allowed actions per state
+- Success/error codes and externally visible error semantics when relevant
+- Side effects per path
+- Failure-path outcomes
 
 Constraints:
 - Keep mode `single` unless explicitly requested otherwise.
+- Be strict about scope, contracts, acceptance criteria, verification, and layer boundaries. Be flexible about internal decomposition and helper structure as long as the implementation stays readable, testable, and consistent with repo patterns.
+- For bug fixes, backend business logic, contract-sensitive behavior, and stateful/cross-layer changes, identify the first test/assertion to add before implementation when practical.
 - No environment triage loops, no worktree setup, no broad verification reruns.
 - Keep output concise and findings-first.
 ```
@@ -35,12 +44,19 @@ Deliver:
 3. Risks and edge cases.
 4. Acceptance criteria draft.
 5. Verification plan (exact commands).
-6. Recommended issue artifact markdown (Task/Spec as applicable) ready for `gh issue create --body-file` when applicable.
+6. `Why this approach` checkpoint:
+   - chosen approach
+   - one rejected alternative
+   - main tradeoff
+   - assumptions/contracts that must hold
+7. Recommended issue artifact markdown (Task/Spec as applicable) ready for `gh issue create --body-file` when applicable.
 
 Constraints:
 - Keep it lean and concrete.
 - Default to one Task unless explicitly asked for split/gated mode.
 - No speculative architecture.
+- For bug fixes, backend business logic, contract-sensitive behavior, and stateful/cross-layer changes, identify the first test/assertion to add when practical.
+- UI polish, exploratory work, copy tweaks, and other low-risk changes can stay lighter.
 ```
 
 Notes:
@@ -66,11 +82,21 @@ Review Scope (in priority order):
 
 Constraints:
 - Use local diff and repository context first.
+- Use the local diff as the review entrypoint. Expand to surrounding code/tests/docs only when the change touches state transitions, contracts, shared utilities, templates, or cross-layer behavior.
 - No environment triage loops or worktree setup.
 - Run targeted checks only when needed to validate a specific finding.
 - Do not rerun broad verification already reported green unless prior results are suspect.
 - Keep output concise and findings-first.
 - No command transcript unless a command failed and that failure matters to a finding.
+- For stateful/cross-layer Tasks, verify status/action/error/side-effect parity across all affected states, not just the happy path.
+- If the verdict is `APPROVED`, end the same response with the lightweight tutoring handoff from section 4.
+- Classify findings as one of:
+  - merge-blocking bug/contract issue
+  - quick hardening fix
+  - follow-up product/UX decision
+- Avoid escalating unresolved wording/copy/product decisions as correctness bugs unless they violate a documented contract.
+- Be strict about contract drift, verification gaps, acceptance-criteria misses, and layer-boundary violations. Be flexible about internal helper decomposition when readability, testability, and repo-pattern consistency are intact.
+- Do not return `APPROVED` while required PR checks are failing, stale, or missing unless you explicitly inspected that CI state and determined it is non-blocking.
 
 Required Output:
 1. Verdict: APPROVED or ACTIONABLE
@@ -80,70 +106,28 @@ Required Output:
    - category: correctness|regression|contract|architecture|security|performance|tests|docs
 3. Verification notes:
    - targeted checks run (if any) and why
+   - whether PR CI/check status was inspected, and any blocking failures
 4. Residual risk/testing gaps:
    - up to 5 concise bullets
+5. If verdict is `APPROVED`, end with the lightweight tutoring handoff from section 4 in the same chat response
 ```
 
-## 4) Required Learning Handoff Template (After APPROVED)
+## 4) Lightweight Tutoring Handoff In Chat (Reviewer-Owned)
 
-Use this after explicit reviewer verdict `APPROVED` is provided back to the implementation agent.
+The lightweight tutoring handoff is generated once, by the approving reviewer, in the same `APPROVED` response.
+Do not generate a second learning handoff after approval is relayed back.
 
-Filename and location:
-- `docs/learning/YYYY-MM-DD-feature-slug-learning.md`
-
-The following header block is static and must be copied verbatim at the top of every generated learning handoff:
-
-```text
----
-TUTORING SESSION CONTEXT (do not modify)
-
-I am a junior developer learning through code review. You are a
-senior dev explaining this to me as your intern.
-
-My stack: FastAPI, PostgreSQL + pgvector, SQLAlchemy async,
-Next.js/TypeScript, Redis, ARQ, OpenAI embeddings, Anthropic API.
-My projects: Quaero (RAG/document Q&A), Rostra (real-time chat),
-FAROS (task manager/AWS).
-
-How to explain: go block by block, 5-15 lines at a time. For each
-block give me WHAT, WHY, TRADEOFF, and PATTERN. Stop after each
-block and ask if I want to go deeper or move on. Do not proceed
-until I respond.
-
-If a concept connects to Rostra, FAROS, or another part of Quaero,
-say so explicitly. If there is a security implication, flag it
-with [SECURITY]. If I ask "why not X", give me a real answer.
-
-Depth signals: "keep going" = next block, "go deeper" = expand
-current block, "how would I explain this in an interview" = give
-me a 2-sentence out-loud answer.
----
-```
-
-Everything below the header is agent-generated per task/spec.
-
-Required section order below the header:
+Post it directly in the same chat/thread.
+Do not create a separate markdown handoff unless explicitly requested.
+Keep it lightweight enough to generate and consume in about five minutes.
+Use plain English, tutoring tone, and cap it at 4 short bullets plus 3-6 code pointers.
 
 ```text
-## What Was Built
-- 2-3 sentences describing what was delivered.
+- What changed: <2-3 sentences max>
+- Why it was done this way: <brief rationale>
+- Tradeoff or pattern worth learning: <one thing to teach>
+- What to review first: <how a junior operator should read the diff>
 
-## Top 3 Decisions and Why
-1. <decision> - <why>
-2. <decision> - <why>
-3. <decision> - <why>
-
-## Non-Obvious Patterns Used
-- Patterns a junior dev might not immediately recognize, with plain-English explanation.
-
-## Tradeoffs Evaluated
-- Options considered and why one was chosen.
-
-## What I'm Uncertain About
-- Any decisions that felt like a coin flip
-- Anything I'd do differently with more context
-- Edge cases I didn't handle and why
-
-## Relevant Code Pointers
-- Use `filename > line number` entries for web-chat/no-IDE contexts.
+Code pointers:
+- `path:line-line — why it matters`
 ```
