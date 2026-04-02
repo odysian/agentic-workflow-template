@@ -6,7 +6,7 @@ Downstream repos should record template baseline version and adoption date in re
 
 ## Workflow Loop
 
-1. Whiteboard feature ideas in `plans/YYYY-MM-DD/*.md` or spec docs (scratch planning).
+1. Whiteboard feature ideas in `plans/YYYY-MM-DD/*.md` or spec docs (scratch planning). Optional: co-locate multiple related drafts under `plans/YYYY-MM-DD/<workstream-slug>/` when one planning pass produces several files (see `AGENTS.md` Agent Operating Loop).
 2. Document work as issues using one of the execution modes below.
 3. Implement and close Task issues via PRs (`Closes #...`).
 4. Finalize by updating docs only when behavior/contracts changed and close related Spec/tracker issues.
@@ -154,6 +154,7 @@ Rules:
   - main tradeoff
   - assumptions/contracts that must hold
 - Output should include: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), and a 3-5 step implementation plan.
+- Include the Execution Brief decision and criteria from `docs/template/KICKOFF.md` §2 (create a brief when it materially shrinks handoff; otherwise state why not).
 - For `mode=fast`, output a quick-fix checklist and verification plan; no issue creation by default.
 - Keep chatter minimal; ask follow-up questions only for hard blockers (auth/permissions/missing required labels).
 
@@ -166,10 +167,12 @@ When a Task issue already exists, use the canonical execution kickoff prompt in 
 Expected behavior:
 
 - restate goal/non-goals/acceptance criteria/verification from the issue
+- if an Execution Brief exists, reference it alongside the Task and treat it as the working handoff for task-local deltas only; the Task issue remains authoritative
 - execute in `single` mode unless explicitly told otherwise
 - create/switch to dedicated branch `task-<id>-<slug>` before implementation
 - for bug fixes, backend business logic, contract-sensitive behavior, and stateful/cross-layer changes, identify the first test/assertion to add before implementation when practical
 - open PR with `Closes #<task-id>`
+- follow brief-first execution and the delta-only patch handoff in `docs/template/KICKOFF.md` instead of reprinting stable repo rules in task-local prompts
 - return the standardized robust reviewer follow-up prompt
 
 ### Resiliency Checkpoints (Lightweight)
@@ -198,7 +201,7 @@ Flow:
 3. Reviewer returns:
    - `APPROVED`, or
    - `ACTIONABLE` with concrete fixes.
-4. If `ACTIONABLE`, implementation agent patches and reruns relevant verification only.
+4. If `ACTIONABLE`, implementation agent uses the delta-only patch handoff from `docs/template/KICKOFF.md` and reruns relevant verification only unless scope expands.
 5. Run second review pass only if explicitly requested.
 
 Reviewer constraints:

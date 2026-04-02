@@ -8,7 +8,7 @@
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.4.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.5.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Source Of Truth (By Rule Type)
@@ -47,10 +47,10 @@ Every feature follows:
 Use this as the default human-in-the-loop sequence to reduce handoff overhead:
 
 1. Plan scope and choose mode (`single` by default; `gated`/`fast` only when explicitly requested).
-2. For issue-backed work (`single`/`gated`), run execution kickoff from `docs/template/KICKOFF.md` on the planned Task.
+2. For issue-backed work (`single`/`gated`), use the brief-first execution flow in `docs/template/KICKOFF.md` (and optional `docs/template/KICKOFF_SHORT.md` shortcuts): keep the Task issue authoritative; reference an Execution Brief only for task-local deltas; then run the execution kickoff on the planned Task.
 3. Open PR with `Closes #<task-id>`.
 4. Run one reviewer pass using the standardized prompt from `docs/template/KICKOFF.md`.
-5. If verdict is `ACTIONABLE`, patch in the implementation branch and rerun targeted verification only.
+5. If verdict is `ACTIONABLE`, use the delta-only patch handoff in `docs/template/KICKOFF.md` and rerun targeted verification only unless scope expands.
 6. When verdict is `APPROVED`, the approving reviewer includes the lightweight tutoring handoff in that same response; the implementation agent then finalizes without generating a second handoff.
 7. Merge PR and sync local branch.
 

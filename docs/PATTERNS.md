@@ -106,6 +106,12 @@ Document test structure and fixture conventions.
 - Include boundary guardrail tests for dependency-direction rules when possible.
 - For refactors, include parity lock checks in test plans or acceptance checklists.
 
+## Implementation Analogs (Reference)
+
+- `docs/analogs/*` holds **narrow, reusable implementation shapes** (when to use, invariants, allowed deltas, checklists). They point at **example slots** or downstream-filled paths; they do not replace repo-wide conventions.
+- Starting points: `docs/analogs/transactional-email-flow.md`, `docs/analogs/stateful-action-matrix.md`.
+- Keep **this file conventions-first**. Add new analogs only when a shape is repeated in code and worth reusing across Tasks.
+
 ## Verification Reference
 
 ```bash
