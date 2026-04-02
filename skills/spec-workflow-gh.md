@@ -58,9 +58,10 @@ When planning shorthand is used, default to this non-interactive behavior:
 
 1. Keep current branch (planning-only behavior).
 2. Do not run preflight discovery commands by default (`gh auth status`, `gh label list`, broad repo scans).
-3. Write issue body file(s) under `plans/`:
-- `plans/task-<feature-slug>-01.md` (`single`)
-- `plans/spec-<feature-slug>.md` + `plans/task-<feature-slug>-01.md` (`gated`)
+3. Write issue body file(s) under `plans/YYYY-MM-DD/` (align with `AGENTS.md`):
+- `plans/YYYY-MM-DD/task-<feature-slug>-01.md` (`single`)
+- `plans/YYYY-MM-DD/spec-<feature-slug>.md` + `plans/YYYY-MM-DD/task-<feature-slug>-01.md` (`gated`)
+- Optional: when multiple artifacts belong to one workstream, use `plans/YYYY-MM-DD/<workstream-slug>/` and place bodies there so `--body-file` paths stay copy-pasteable.
 4. Run `gh issue create` directly for `single`/`gated` unless blocked by auth/permissions/missing required labels.
 5. Ask follow-up questions only for hard blockers.
 
@@ -75,9 +76,9 @@ When planning shorthand is used, default to this non-interactive behavior:
 
 ### B) Generate GitHub CLI commands
 
-- mode-specific filenames:
-  - `plans/task-<feature>-01.md` (`single`)
-  - `plans/spec-<feature>.md` + `plans/task-<feature>-01.md` (`gated`)
+- mode-specific filenames (prefer dated paths; optional `/<workstream-slug>/` when co-locating):
+  - `plans/YYYY-MM-DD/task-<feature>-01.md` (`single`)
+  - `plans/YYYY-MM-DD/spec-<feature>.md` + `plans/YYYY-MM-DD/task-<feature>-01.md` (`gated`)
 - mode-specific `gh issue create` commands using `--body-file` and `--label`
 
 ### C) Execute planned Task (separate kickoff)

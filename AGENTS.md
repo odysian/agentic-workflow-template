@@ -13,6 +13,7 @@ Must-read in this order:
 Read conditionally (only when relevant):
 - `GREENFIELD_BLUEPRINT.md` for greenfield repos or explicit restructuring tasks
 - `docs/README.md`, `docs/ARCHITECTURE.md`, `docs/PATTERNS.md`, `docs/REVIEW_CHECKLIST.md` for domain/contract/pattern changes
+- `docs/template/EXECUTION_BRIEF.md` and `docs/analogs/*` when a Task uses a compressed handoff or analog pointers
 - `skills/*` playbooks only when explicitly requested or clearly required by the task
 
 ## Unit of Work Rule
@@ -30,14 +31,16 @@ Read conditionally (only when relevant):
 - Canonical kickoff types:
   - Planning kickoff (issue planning only): `Run kickoff for feature <feature-id> from <filename> mode=<single|gated|fast>, planning-only (no code changes, no PR).`
   - Execution kickoff (implementation): `Run kickoff for existing Task #<task-id> mode=single.`
+  - If an Execution Brief exists, reference it after the Task prompt and use it as the working handoff for task-local deltas; the GitHub Task issue remains authoritative.
   - If `mode` is omitted, default to `single`.
   - Do not switch to `gated` or `fast` unless explicitly requested.
   - Planning kickoff output: issue body file(s), `gh issue create` command(s) when applicable, created issue link(s), a 3-5 step implementation plan, and the short `Why this approach` checkpoint from `docs/template/KICKOFF.md` (immediately before issue-ready markdown).
   - Execution kickoff output: implementation + verification + PR + standardized reviewer follow-up prompt + final completion after explicit `APPROVED`, with the lightweight tutoring handoff generated once by the approving reviewer in that same response.
+  - Use `docs/template/KICKOFF.md` for exact brief-first execution, delta-only patch handoff, and reviewer prompt wording instead of restating stable repo rules in task-local prompts.
 
 ## Agent Operating Loop
 
-1. Whiteboard scope in `plans/YYYY-MM-DD/*.md` or spec docs (scratch only). New planning files should follow `plans/YYYY-MM-DD/<type>-<slug>.md`.
+1. Whiteboard scope in `plans/YYYY-MM-DD/*.md` or spec docs (scratch only). New planning files should follow `plans/YYYY-MM-DD/<type>-<slug>.md`. Optional: when one workstream produces several artifacts (for example Spec + Task bodies and an optional Execution Brief), co-locate them under `plans/YYYY-MM-DD/<workstream-slug>/` with a stable hyphenated slug.
 2. Choose execution mode and create required issue(s) (`single` unless explicitly asked for `gated`/`fast`; `fast` can skip issue creation).
 3. Restate goal and acceptance criteria.
 4. Plan minimal files and scope.
@@ -57,7 +60,7 @@ Read conditionally (only when relevant):
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.4.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.5.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Operating Rules

@@ -2,8 +2,8 @@
 
 ## Current Release
 
-- Current baseline tag: `v0.4.0`
-- Scope: workflow refresh (reviewer-owned tutoring handoff, planning checkpoint, selective test-first, stateful/cross-layer Behavior Matrix, stronger review contract, Copilot guidance).
+- Current baseline tag: `v0.5.0`
+- Scope: workflow token optimization (Execution Brief, `docs/analogs/*`, brief-first execution, delta-only patch handoff, `docs/template/KICKOFF_SHORT.md`, reference-not-reprint alignment across control-plane docs).
 
 ## Release History (Short)
 
@@ -11,6 +11,7 @@
 - `v0.2.0`: lean implementation -> PR -> reviewer prompt flow, focused review constraints, and streamlined review reporting requirements.
 - `v0.3.0`: scaffold hardening templates + template preflight + required GH helper scripts + standardized dated plans convention examples.
 - `v0.4.0`: reviewer-owned in-chat learning handoff; planning `Why this approach`; conditional Behavior Matrix; selective test-first and DoR/DoD tightening; `tight boundaries, loose middle`; expanded reviewer parity/CI guidance; `.github/copilot-instructions.md`.
+- `v0.5.0`: Execution Brief template; generic analog docs; brief-first execution + delta-only patching in `docs/template/KICKOFF.md`; operator shortcuts; optional plans workstream subfolder hint; skills path alignment to dated `plans/`.
 
 ## Ongoing Release Process
 
