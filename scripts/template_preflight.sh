@@ -7,8 +7,6 @@ cd "$ROOT_DIR"
 required_paths=(
   "AGENTS.md"
   "CLAUDE.md"
-  "backend/AGENTS.md"
-  "frontend/AGENTS.md"
   "docs/WORKFLOW.md"
   "docs/ISSUES_WORKFLOW.md"
   "docs/GREENFIELD_BLUEPRINT.md"
@@ -39,10 +37,26 @@ required_exec=(
   "scripts/create_pr.sh"
 )
 
+has_backend_surface() {
+  [[ -d "backend/app" ]] || [[ -d "backend/src" ]] || [[ -d "backend/tests" ]] || [[ -f "backend/pyproject.toml" ]] || [[ -f "backend/requirements.txt" ]] || [[ -f "backend/Pipfile" ]]
+}
+
+has_frontend_surface() {
+  [[ -d "frontend/src" ]] || [[ -d "frontend/app" ]] || [[ -d "frontend/tests" ]] || [[ -f "frontend/package.json" ]] || [[ -f "frontend/pnpm-lock.yaml" ]] || [[ -f "frontend/yarn.lock" ]]
+}
+
 missing=()
 for path in "${required_paths[@]}"; do
   [[ -f "$path" ]] || missing+=("$path")
 done
+
+if has_backend_surface && [[ ! -f "backend/AGENTS.md" ]]; then
+  missing+=("backend/AGENTS.md (required when backend surface exists)")
+fi
+
+if has_frontend_surface && [[ ! -f "frontend/AGENTS.md" ]]; then
+  missing+=("frontend/AGENTS.md (required when frontend surface exists)")
+fi
 
 if ((${#missing[@]} > 0)); then
   echo "Template preflight FAILED: missing required files:"

@@ -127,13 +127,19 @@ Notes:
 Review Task #<task-id> / PR #<pr-id> on branch <task-branch> vs <base-branch>.
 
 Use reviewer constraints and required output contract from docs/template/KICKOFF.md section 3b.
-If you need the full robust prompt body, use .github/prompts/review-task.prompt.md.
+Load .github/prompts/review-task.prompt.md for the full robust prompt body.
 ```
 
 ### 3b) Robust Prompt Body + Output Contract
 
 - Full robust prompt text is owned in `.github/prompts/review-task.prompt.md`.
 - Keep `docs/template/KICKOFF.md` as the index and contract pointer to avoid drift.
+- Reviewer constraints summary (always apply):
+  - use local diff/repo context first
+  - no environment triage loops or worktree setup by default
+  - run targeted checks only when needed; do not rerun broad verification already reported green unless suspect
+  - keep output concise and findings-first; no command transcript unless a failed command matters to a finding
+  - do not return `APPROVED` while required PR checks are failing/stale/missing unless explicitly inspected and non-blocking
 
 Required reviewer output:
 
