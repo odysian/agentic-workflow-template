@@ -1,79 +1,84 @@
 # Migration Guide
 
-This guide explains how to use this template as the foundation for a new project and how to adopt it in an existing repo.
+This guide covers both new-project bootstrap and adoption in existing repositories.
 
-## What this template provides
+## What This Template Provides
 
 - Agent operating rules (`AGENTS.md`)
-- Core workflow (`WORKFLOW.md`)
-- Issue-driven execution control plane (`ISSUES_WORKFLOW.md`)
+- Workflow/control-plane docs under `docs/`
 - Canonical kickoff/review prompts (`docs/template/KICKOFF.md`)
-- Planning templates:
-  - `docs/template/PROJECT_SETUP.md`
-  - `docs/template/VERTICAL_SLICE_SPEC.md`
-  - `docs/template/SCAFFOLD_KICKOFF.md`
+- Robust reviewer prompt body (`.github/prompts/review-task.prompt.md`)
+- Planning templates in `docs/template/`
 - Documentation skeletons (`docs/ARCHITECTURE.md`, `docs/PATTERNS.md`, `docs/REVIEW_CHECKLIST.md`)
-- GitHub issue templates and PR template (`.github/`)
-- Workflow helper scripts (`scripts/gh_preflight.sh`, `scripts/create_pr.sh`)
+- GitHub issue/PR templates (`.github/`)
+- Workflow helper scripts (`scripts/`)
 - Template integrity checks (`scripts/template_preflight.sh`, `scripts/check-unresolved-template-tokens.sh`)
 - Portable playbooks in `skills/`
 
-## Part 1: New Project Setup (recommended)
+## Upgrading From <= 0.5.x
+
+Version `0.6.0` introduces a breaking docs-topology and bootstrap update.
+
+### Path moves
+
+| Old path (<= 0.5.x) | New path (0.6.0+) |
+| --- | --- |
+| `ISSUES_WORKFLOW.md` | `docs/ISSUES_WORKFLOW.md` |
+| `WORKFLOW.md` | `docs/WORKFLOW.md` |
+| `GREENFIELD_BLUEPRINT.md` | `docs/GREENFIELD_BLUEPRINT.md` |
+
+### Required downstream actions
+
+1. Update links/bookmarks/notes/CI references to the new `docs/` paths.
+2. Update any local automation or scripts that hardcode old root paths.
+3. Re-run scaffold alignment if you maintain a generator or template copier.
+4. Re-run template checks:
+
+```bash
+./scripts/template_preflight.sh
+./scripts/check-unresolved-template-tokens.sh
+```
+
+### Startup contract change
+
+- `AGENTS.md` is now mode-routed instead of fixed universal read order.
+- `CLAUDE.md` should include `@AGENTS.md` only; other docs should be plain conditional paths.
+
+## Part 1: New Project Setup (Recommended)
 
 1. Create a new repo from this template repository.
-2. Run `./scripts/template_preflight.sh` and resolve any missing assets.
-3. Replace all token placeholders before implementation: `{{PROJECT_NAME}}`, `{{STACK_SUMMARY}}`, `{{REPO_STRUCTURE_OVERVIEW}}`, `{{VERIFY_COMMANDS}}`, `{{FRONTEND_VERIFY_COMMANDS}}`, `{{BACKEND_VERIFY_COMMANDS}}`, `{{DB_VERIFY_COMMANDS}}`, `{{DOCS_PATHS}}`, `{{CI_LINKS_OR_NOTES}}`.
-4. Create project-specific planning docs from templates:
-   - `PROJECT_SETUP.md` (stack/runtime/dependencies/env/contracts)
-   - `VERTICAL_SLICE_SPEC.md` (narrow validation scope)
-   - `SCAFFOLD_KICKOFF.md` (scaffolding-only execution constraints)
+2. Run `./scripts/template_preflight.sh` and resolve missing assets.
+3. Replace all token placeholders before implementation.
+4. Create project planning docs from templates in `docs/template/`.
 5. Confirm verification commands run locally.
 6. Configure GitHub labels and board.
 7. Record template baseline version and adoption date in repo docs.
 8. Use planning artifact paths as `plans/YYYY-MM-DD/<type>-<slug>.md`.
-9. Start with a Task issue by default (`single` mode); use Spec + Tasks only when scope/risk requires `gated` mode.
 
 ## Part 2: Existing Project Adoption
 
 1. Copy template files into the existing repo.
-2. Merge carefully with existing docs (do not overwrite project-specific rules).
-3. Reconcile contradictions first (verification commands, auth pattern statements, test plan claims).
-4. Decide source of truth: for issue-backed work (`single`/`gated`), GitHub Issues = execution control plane, `TASKS.md` = optional scratchpad only.
-5. Roll out in two phases: Phase A = docs/templates only, Phase B = enforce in active work (`Task -> PR` by default; `Spec -> Task -> PR` when needed).
-6. Keep execution mode defaults strict: default to `single`; use `gated`/`fast` only when explicitly requested.
-7. Keep ceremony conditional: second review pass only when explicitly requested; decision briefs and doc updates only when behavior/contracts/architecture changed.
+2. Merge with existing docs carefully; keep project-specific rules.
+3. Reconcile contradictions first (verification commands, auth patterns, test plans).
+4. Keep issue-backed execution control plane authoritative.
+5. Roll out in two phases:
+   - Phase A: docs/templates alignment only
+   - Phase B: enforce Task -> PR execution flow in active work
+6. Keep mode defaults strict: `single` by default; `gated`/`fast` only when explicitly requested.
 
-Recommended onboarding order for agents:
-1. `AGENTS.md`
-2. `ISSUES_WORKFLOW.md`
-3. `docs/template/KICKOFF.md`
-4. `WORKFLOW.md`
+## Definition Of Ready And Done
 
-Kickoff split:
-- Planning kickoff (`feature -> issue artifacts`) is planning-only: no code changes, no PR.
-- Execution kickoff (`existing Task -> implementation`) performs branch/implement/verify/PR flow.
+Use `docs/ISSUES_WORKFLOW.md` as the authoritative gate for DoR and DoD.
 
-## Definition of Ready and Done
-
-Use `ISSUES_WORKFLOW.md` as the authoritative gate for:
-
-- Definition of Ready (DoR)
-- Definition of Done (DoD)
-
-No implementation should begin for backend-coupled work until Decision Locks are checked.
+No backend-coupled implementation should begin until Decision Locks are checked.
 
 ## ADR Rule
 
 Use Decision issues/checkboxes for short-term locking.
-If a decision has lasting architecture/security/performance impact, create an ADR (`NNN-*.md`) and link it from the Spec and PR.
+If a decision has lasting architecture/security/performance impact, create an ADR (`NNN-*.md`) and link it from the Task/Spec and PR.
 
-## Optional Later: MCP
-
-MCP is intentionally out of scope for v1.
-Add MCP later only if you want automation for issue creation/labeling/CI summaries.
-
-## Suggested Release Discipline for this template repo
+## Suggested Release Discipline For This Template Repo
 
 1. Tag versions (`v0.1.0`, `v0.2.0`, ...).
-2. Keep a short changelog or release notes.
-3. In downstream repos, record which template version they started from.
+2. Keep release notes concise and dated.
+3. In downstream repos, record the template version used at initialization.

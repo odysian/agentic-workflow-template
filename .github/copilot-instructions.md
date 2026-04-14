@@ -1,24 +1,28 @@
-# Copilot / automated code review (template-neutral)
+# Copilot / Automated Review Instructions
 
-Focus review comments on real engineering signal, not workflow ceremony.
+Route workflow guidance through canonical docs instead of restating process rules.
 
-## Prioritize
+## Start With
 
-- Correctness, regressions, and contract drift
-- Boundary violations and architectural inconsistency with the repo's stated layering
-- Missing tests or docs for **changed** behavior
-- Security and performance risks introduced by the diff
+- `AGENTS.md` for mode routing
+- `docs/ISSUES_WORKFLOW.md` for execution control plane
+- `docs/template/KICKOFF.md` for kickoff + reviewer contracts
+- `.github/prompts/review-task.prompt.md` when full robust reviewer body is needed
 
-## Do not
+## Review Priorities
 
-- Treat normal workflow steps (planning checkpoints, lightweight tutoring handoffs in chat, issue/PR hygiene) as code defects
-- Generate or demand learning handoffs as part of review triage; that belongs to the approved reviewer's `APPROVED` response per `docs/template/KICKOFF.md`
-- Suggest opportunistic large refactors or broad pattern rewrites during review unless the Task explicitly scoped them
-- Expand scope beyond the approved Task
+- correctness, regressions, and contract drift
+- boundary violations against documented layering
+- security/performance risks introduced by the diff
+- missing tests/docs for changed behavior
 
-## Style
+## Keep Reviews High Signal
 
-- Respect **tight boundaries, loose middle**: be strict on scope, contracts, acceptance criteria, verification, and layer boundaries; be flexible on internal decomposition when code stays readable, testable, and consistent with repo patterns
-- Reference exact file paths and line numbers; keep comments concise
+- findings-first output with exact file/line references
+- avoid workflow-ceremony nitpicks as code defects
+- avoid opportunistic large refactors unless the Task explicitly scopes them
+- stay inside the approved Task scope
 
-When repo docs define a review checklist (for example `docs/REVIEW_CHECKLIST.md`), treat it as advisory context alongside `AGENTS.md` and `WORKFLOW.md`.
+## Supporting Context
+
+Use `docs/REVIEW_CHECKLIST.md`, `docs/workflow/REVIEW.md`, and subtree `backend/AGENTS.md` or `frontend/AGENTS.md` when relevant to touched scope.

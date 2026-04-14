@@ -61,7 +61,7 @@
 - [ ] Architecture/pattern docs updated if needed
 - [ ] ADR created/updated if decision has lasting impact
 - [ ] Issue and PR links are complete
-- [ ] Changes remain aligned with `GREENFIELD_BLUEPRINT.md` defaults (or deviation is documented)
+- [ ] Changes remain aligned with `docs/GREENFIELD_BLUEPRINT.md` defaults (or deviation is documented)
 
 ## CI
 

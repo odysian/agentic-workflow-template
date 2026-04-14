@@ -14,16 +14,22 @@ This file is the default baseline for new repositories that use this template.
 ```text
 {{PROJECT_NAME}}/
   AGENTS.md
-  WORKFLOW.md
-  ISSUES_WORKFLOW.md
-  GREENFIELD_BLUEPRINT.md
+  CLAUDE.md
   docs/
+    WORKFLOW.md
+    ISSUES_WORKFLOW.md
+    GREENFIELD_BLUEPRINT.md
+    workflow/
+      IMPLEMENT.md
+      REVIEW.md
+      VERIFY.md
     ARCHITECTURE.md
     PATTERNS.md
     REVIEW_CHECKLIST.md
     adr/
   plans/
   backend/
+    AGENTS.md
     app/
       api/                      # Route registration/composition only
       features/
@@ -37,6 +43,7 @@ This file is the default baseline for new repositories that use this template.
       shared/                   # Cross-feature domain utilities
     tests/
   frontend/
+    AGENTS.md
     src/
       app/                      # Route shells/composition
       features/
@@ -99,9 +106,8 @@ For refactors declared as "no API/contract change", verify:
 
 ## Documentation Layout Recommendation
 
-For clean traversal, keep root docs lean and move detailed docs into `docs/`:
+For clean traversal, keep root docs minimal and route workflow guidance through `docs/`:
 
-- Keep at root: `AGENTS.md`, `WORKFLOW.md`, `ISSUES_WORKFLOW.md`, `GREENFIELD_BLUEPRINT.md`.
-- Keep in `docs/`: `ARCHITECTURE.md`, `PATTERNS.md`, `REVIEW_CHECKLIST.md`, ADRs, runbooks.
-- Keep automation playbooks under `skills/`.
-
+- Keep at root: `AGENTS.md`, `CLAUDE.md`.
+- Keep in `docs/`: workflow/control-plane docs, architecture/pattern/checklist docs, ADRs, and template docs.
+- Keep implementation playbooks under `skills/`.

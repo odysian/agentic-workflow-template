@@ -15,16 +15,22 @@ Use this as the default structure for new repos:
 ```text
 {{PROJECT_NAME}}/
   AGENTS.md
-  WORKFLOW.md
-  ISSUES_WORKFLOW.md
-  GREENFIELD_BLUEPRINT.md
+  CLAUDE.md
   docs/
+    WORKFLOW.md
+    ISSUES_WORKFLOW.md
+    GREENFIELD_BLUEPRINT.md
+    workflow/
+      IMPLEMENT.md
+      REVIEW.md
+      VERIFY.md
     ARCHITECTURE.md
     PATTERNS.md
     REVIEW_CHECKLIST.md
     adr/
   plans/
   backend/
+    AGENTS.md
     app/
       api/
       features/
@@ -32,6 +38,7 @@ Use this as the default structure for new repos:
       shared/
     tests/
   frontend/
+    AGENTS.md
     src/
       app/
       features/
