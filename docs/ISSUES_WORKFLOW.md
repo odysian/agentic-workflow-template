@@ -2,7 +2,7 @@
 
 This repository uses GitHub issues as the execution control plane.
 
-Downstream repos should record template baseline version and adoption date in repo docs (for example `AGENTS.md` or `MIGRATION_GUIDE.md`).
+Downstream repos should record template baseline version and adoption date in repo docs (for example `AGENTS.md` or `docs/template/MIGRATION_GUIDE.md`).
 
 ## Workflow Loop
 
@@ -29,7 +29,7 @@ Downstream repos should record template baseline version and adoption date in re
 8. For `single` and `gated` modes, create a dedicated branch for the Task issue before implementation (for example: `task-123-short-name`).
 9. After Task PR creation, run a lean reviewer follow-up pass and return `APPROVED` or `ACTIONABLE`.
 10. If scope is a no-contract refactor, include a parity lock checklist in the Task acceptance criteria.
-11. For greenfield repos, align issue scope with `GREENFIELD_BLUEPRINT.md` boundaries and structure defaults.
+11. For greenfield repos, align issue scope with `docs/GREENFIELD_BLUEPRINT.md` boundaries and structure defaults.
 
 **Guiding principle — tight boundaries, loose middle:** be strict about scope, contracts, acceptance criteria, verification, and layer boundaries. Be flexible about internal decomposition and helper structure as long as the implementation stays readable, testable, and consistent with repo patterns.
 
@@ -127,7 +127,7 @@ Use project commands:
 
 Prefer repo-level verify entrypoints when available (for example: `make backend-verify`, `make frontend-verify`).
 
-When a Makefile verify contract exists (see `WORKFLOW.md`), use those canonical targets in Task verification sections.
+When a Makefile verify contract exists (see `docs/workflow/VERIFY.md`), use those canonical targets in Task verification sections.
 
 ## Codex + GitHub CLI Playbook
 

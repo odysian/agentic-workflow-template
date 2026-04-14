@@ -1,6 +1,12 @@
-# Agent Entrypoint
+@AGENTS.md
 
-Start here: `AGENTS.md`.
-
-Do not duplicate workflow rules in this file.
-Follow onboarding order, execution rules, and kickoff/reviewer contracts from repository canonical docs referenced by `AGENTS.md`.
+Open additional docs only when the task touches those surfaces (do not preload unless needed):
+- docs/ARCHITECTURE.md
+- docs/PATTERNS.md
+- docs/REVIEW_CHECKLIST.md
+- docs/ISSUES_WORKFLOW.md
+- docs/workflow/IMPLEMENT.md
+- docs/workflow/REVIEW.md
+- docs/workflow/VERIFY.md
+- docs/template/KICKOFF.md
+- .github/prompts/review-task.prompt.md

@@ -4,7 +4,7 @@ Record conventions that already exist in code.
 
 ## Greenfield Structure Defaults
 
-Use `GREENFIELD_BLUEPRINT.md` for new repos.
+Use `docs/GREENFIELD_BLUEPRINT.md` for new repos.
 
 - Backend default: `backend/app/features/<feature>/...`
 - Frontend default: `frontend/src/features/<feature>/...` plus `src/shared/...`

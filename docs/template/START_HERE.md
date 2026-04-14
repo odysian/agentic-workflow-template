@@ -5,19 +5,19 @@ This folder is the project-agnostic baseline for an agentic workflow.
 ## 5-Minute Setup
 
 1. Create a new repo from this template (or copy template root docs/folders into your repo).
-2. Run template preflight in the new repo and fix missing assets: `./scripts/template_preflight.sh`.
-3. Replace all required tokens before any implementation work.
+2. Run template preflight and fix missing assets: `./scripts/template_preflight.sh`.
+3. Replace all required tokens before implementation.
 4. Create project planning docs from templates:
    - `docs/template/PROJECT_SETUP.md`
    - `docs/template/VERTICAL_SLICE_SPEC.md`
    - `docs/template/SCAFFOLD_KICKOFF.md`
-5. Pin runtime/toolchain versions (for example Node/Python) and align local + CI.
-6. Confirm verify commands run locally and in CI.
-7. Start work through GitHub Issues by default: `Task -> PR`; use `Spec -> Task -> PR` only when scope/risk requires it. Use `fast` mode only when explicitly requested and criteria are met.
+5. Pin runtime/toolchain versions and align local + CI commands.
+6. Confirm verification commands run locally.
+7. Start work through GitHub Issues by default (`single` mode: Task -> PR).
 
 ## Required Tokens
 
-Replace these in the base files:
+Replace these in base files:
 
 - `{{PROJECT_NAME}}`
 - `{{STACK_SUMMARY}}`
@@ -34,53 +34,35 @@ Replace these in the base files:
 All new planning files should use:
 - `plans/YYYY-MM-DD/<type>-<slug>.md`
 
-Examples:
-- `plans/2026-03-18/spec-auth-flow.md`
-- `plans/2026-03-18/task-auth-refresh-01.md`
-
 ## Workflow Metadata (Recommended)
 
 In downstream repos, record:
 - template baseline version used at initialization
 - adoption date (`YYYY-MM-DD`)
 
-Suggested locations:
-- `AGENTS.md`
-- `WORKFLOW.md`
-- `ISSUES_WORKFLOW.md`
-- `MIGRATION_GUIDE.md`
+## Workflow Source Of Truth
 
-## Makefile Verify Contract (Recommended)
-
-If your repo uses `make` as the verification entrypoint, define:
-
-- `make verify`
-- `make backend-verify`
-- `make frontend-verify`
-- `make db-verify` (if applicable)
-- `make template-verify` (for template checks, for example unresolved-token guard)
-
-Keep these targets deterministic, non-interactive, and CI-aligned with local usage.
-
-## Workflow Source of Truth
-
-- Execution control plane: `ISSUES_WORKFLOW.md`
+- Onboarding and mode routing: `AGENTS.md`
+- Execution control plane: `docs/ISSUES_WORKFLOW.md`
 - Kickoff/reviewer prompt contract: `docs/template/KICKOFF.md`
-- Engineering workflow summary: `WORKFLOW.md`
-- Agent constraints/onboarding: `AGENTS.md`
-- Greenfield baseline: `GREENFIELD_BLUEPRINT.md`
+- Workflow index: `docs/WORKFLOW.md`
+- Implementation defaults: `docs/workflow/IMPLEMENT.md`
+- Review defaults: `docs/workflow/REVIEW.md`
+- Verification tiers: `docs/workflow/VERIFY.md`
+- Greenfield baseline: `docs/GREENFIELD_BLUEPRINT.md`
 
-Default must-read order for agents:
-1. `AGENTS.md`
-2. `ISSUES_WORKFLOW.md`
-3. `docs/template/KICKOFF.md`
-4. `WORKFLOW.md`
+Default behavior is mode-routed startup via `AGENTS.md`; avoid universal preloading of all workflow docs.
 
-`TASKS.md` (if present) is a local scratchpad only.
+## Template Verification
+
+```bash
+./scripts/template_preflight.sh
+./scripts/check-unresolved-template-tokens.sh
+```
 
 ## Optional Later
 
-MCP is intentionally out of scope for v1. Add it later only to automate issue creation/labeling/CI summaries.
+MCP is intentionally out of scope for v1. Add it later only for issue/CI automation.
 
 ## CI Notes
 
