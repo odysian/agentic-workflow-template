@@ -15,6 +15,25 @@ This guide covers both new-project bootstrap and adoption in existing repositori
 - Template integrity checks (`scripts/template_preflight.sh`, `scripts/check-unresolved-template-tokens.sh`)
 - Portable playbooks in `skills/`
 
+## Upgrading From <= 0.7.x
+
+Version `0.8.0` adds optional repo-local planning and review playbooks.
+
+### New files: `skills/domain-pass.md`, `skills/grill-plan.md`, `skills/design-interface.md`, `skills/architecture-audit.md`, `skills/tdd-boundaries.md`
+
+- These are advisory manual-load helpers, not automatic runtime requirements.
+- Downstream repos can keep, trim, or adapt them to local conventions.
+- The `CONTEXT.md`-aware playbooks (`domain-pass.md`, `grill-plan.md`) assume the 0.7.0 workflow/domain-model upgrade has already been adopted.
+- No new mandatory workflow steps are introduced.
+
+### Required downstream actions
+
+Re-run template checks:
+
+```bash
+./scripts/template_preflight.sh
+```
+
 ## Upgrading From <= 0.6.x
 
 Version `0.7.0` adds domain language governance and updates the approval learning handoff.

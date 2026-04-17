@@ -7,6 +7,12 @@ Current version: `0.7.0`
 - Use semantic versioning for template evolution.
 - Tag releases as `vMAJOR.MINOR.PATCH`.
 
+### `0.8.0` (2026-04-17)
+
+- Added optional repo-local planning/review playbooks under `skills/`: `domain-pass.md`, `grill-plan.md`, `design-interface.md`, `architecture-audit.md`, `tdd-boundaries.md`.
+- Added template preflight coverage for the five new skill files.
+- Tightened `AGENTS.md` Skills Governance to clarify that `skills/*.md` are optional portable playbooks and that repo docs remain authoritative.
+
 ### `0.7.0` (2026-04-17)
 
 - Added root `CONTEXT.md` scaffold for downstream product/domain language.
