@@ -1,6 +1,6 @@
 # Template Version
 
-Current version: `0.7.0`
+Current version: `0.8.0`
 
 ## Notes
 

@@ -22,7 +22,7 @@ Use this for periodic architecture review or before planning a focused refactor.
    - where to introduce a port/adapter
    - what tests become easier afterward
 6. Prefer incremental refactors over large rewrites.
-7. Tie recommendations back to repo-specific pain points when relevant, such as extraction flow, provider seams, background jobs, or document-generation boundaries.
+7. Tie recommendations back to repo-specific pain points when relevant, such as provider seams, background jobs, or queue/worker boundaries.
 
 Output should be a short audit with prioritized findings, expected payoff, and the smallest worthwhile next refactor.
 
