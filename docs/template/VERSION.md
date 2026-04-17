@@ -1,11 +1,19 @@
 # Template Version
 
-Current version: `0.6.0`
+Current version: `0.7.0`
 
 ## Notes
 
 - Use semantic versioning for template evolution.
 - Tag releases as `vMAJOR.MINOR.PATCH`.
+
+### `0.7.0` (2026-04-17)
+
+- Added root `CONTEXT.md` scaffold for downstream product/domain language.
+- Added conditional Domain Pass planning checkpoint; criteria and DoR rule in `docs/ISSUES_WORKFLOW.md`.
+- Updated planning routing in `AGENTS.md` and `docs/workflow/IMPLEMENT.md` to include Domain Pass and `CONTEXT.md`.
+- Updated `APPROVED` reviewer learning handoff to start with a concept primer and remove required code pointers; new shape in `docs/template/KICKOFF.md` section 4 and `docs/workflow/REVIEW.md`.
+- Updated `docs/WORKFLOW.md` Source of Truth Map with `CONTEXT.md` entry.
 
 ### `0.6.0` (2026-04-13)
 

@@ -2,8 +2,8 @@
 
 ## Current Release
 
-- Current baseline tag: `v0.6.0`
-- Scope: mode-routed startup, moved workflow docs under `docs/`, workflow split (`docs/workflow/*`), extracted review prompt file, tiered verification artifacts, and script/path coherence updates.
+- Current baseline tag: `v0.7.0`
+- Scope: root `CONTEXT.md` scaffold, conditional Domain Pass planning checkpoint, concept-primer approval learning handoff, plus the v0.6.0 mode-routed startup, docs topology, workflow split, extracted review prompt file, tiered verification artifacts, and script/path coherence updates.
 
 ## Release History (Short)
 
@@ -13,6 +13,7 @@
 - `v0.4.0`: reviewer-owned in-chat learning handoff; planning "Why this approach"; conditional Behavior Matrix; selective test-first and DoR/DoD tightening.
 - `v0.5.0`: Execution Brief template; generic analog docs; brief-first execution + delta-only patching in `docs/template/KICKOFF.md`; operator shortcuts.
 - `v0.6.0`: BREAKING docs-path move + mode-routed startup + workflow split + extracted robust review prompt + tiered verification defaults.
+- `v0.7.0`: root `CONTEXT.md` scaffold + conditional Domain Pass planning checkpoint + concept-primer approval learning handoff.
 
 ## Ongoing Release Process
 

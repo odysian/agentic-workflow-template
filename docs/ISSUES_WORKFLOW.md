@@ -80,6 +80,28 @@ Split only when it clearly improves delivery or risk control:
 - parallel work or staged rollout is needed
 - a module exceeds file-size thresholds and needs intentional extraction
 
+## When Domain Pass Is Required
+
+Run a **Domain Pass** before drafting issues when any of the following are true:
+
+- the feature introduces a new core noun or user-facing concept
+- a term is overloaded or conflicts with existing project language
+- the feature changes lifecycle or state meaning
+- the feature crosses backend/frontend/provider boundaries and needs shared language
+- the feature creates or renames a major workflow, role, entity, or status
+- the feature is `gated`, high-risk, or likely to generate several Task issues
+
+Skip it for:
+
+- isolated bug fixes with stable terminology
+- purely visual polish or style changes
+- dependency/tooling updates with no user-facing language change
+- low-risk `fast` fixes unless they expose terminology ambiguity
+
+When terms are resolved during a Domain Pass, update `CONTEXT.md` inline before finalizing issue artifacts.
+
+Decision Locks should use canonical terms from `CONTEXT.md` when present. ADRs remain optional and rare; terminology alone is not ADR-worthy unless tied to a durable architecture trade-off.
+
 ## Definition Of Ready
 
 A Task is ready when:
@@ -91,6 +113,7 @@ A Task is ready when:
 - for backend-coupled work: Decision Locks are checked in the controlling issue (Task in `single`, Spec in `gated`)
 - for no-contract refactors: parity lock checklist is explicitly listed in acceptance criteria
 - for bug fixes, backend business logic, contract-sensitive behavior, and stateful/cross-layer changes: the first test/assertion to add is identified when practical
+- for domain-affecting work: canonical terms are either resolved in `CONTEXT.md` or explicitly listed as open ambiguities in the Task/Spec
 
 ## Definition Of Done
 

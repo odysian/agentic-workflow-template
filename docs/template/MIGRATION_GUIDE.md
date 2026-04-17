@@ -15,6 +15,41 @@ This guide covers both new-project bootstrap and adoption in existing repositori
 - Template integrity checks (`scripts/template_preflight.sh`, `scripts/check-unresolved-template-tokens.sh`)
 - Portable playbooks in `skills/`
 
+## Upgrading From <= 0.6.x
+
+Version `0.7.0` adds domain language governance and updates the approval learning handoff.
+
+### New file: `CONTEXT.md`
+
+- A root `CONTEXT.md` scaffold is now part of the template.
+- Copy it into downstream repos or create it from scratch using the template shape.
+- Seed it only with real project terms; do not fill it with generic implementation nouns (`repository`, `controller`, `hook`, `migration`).
+- Update it inline during planning whenever a Domain Pass resolves a term.
+
+### Domain Pass planning checkpoint
+
+- Domain Pass is a conditional step before issue creation, not a mandatory gate for every task.
+- Required when a feature introduces new product language, changes lifecycle/state meaning, or crosses domain boundaries.
+- Skipped for bug fixes with stable terminology, style changes, dependency updates, and low-risk `fast` work.
+- Decision Locks should use canonical terms from `CONTEXT.md`. ADRs remain optional and rare.
+
+### Updated `APPROVED` reviewer learning handoff
+
+Future `APPROVED` review responses use the new five-bullet concept-primer handoff from `docs/template/KICKOFF.md` section 4. The old `Code pointers:` block is no longer required. This is a format change only; the `APPROVED` / `ACTIONABLE` verdict contract is unchanged.
+
+### Required downstream actions
+
+1. Add `CONTEXT.md` to root (copy template scaffold or create from scratch).
+2. Re-run template checks:
+
+```bash
+./scripts/template_preflight.sh
+./scripts/check-unresolved-template-tokens.sh
+```
+
+3. Update planning habits so terminology-heavy work runs a Domain Pass before issue creation.
+4. Expect future `APPROVED` review responses to start with `Concept primer` instead of `Code pointers`.
+
 ## Upgrading From <= 0.5.x
 
 Version `0.6.0` introduces a breaking docs-topology and bootstrap update.

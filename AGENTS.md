@@ -38,9 +38,12 @@ Choose the startup path that matches your immediate objective.
 ### C) Plan Work / Create Issues / Choose Mode
 
 1. Read `docs/ISSUES_WORKFLOW.md` first.
-2. Use planning kickoff from `docs/template/KICKOFF.md` section 2.
-3. Pull verification tier guidance from `docs/workflow/VERIFY.md`.
-4. Use `skills/spec-workflow-gh.md` only for one-shot issue-body + `gh` generation.
+2. Read `CONTEXT.md` when present to ground issue language in canonical product terms.
+3. Run a Domain Pass before drafting issues when the feature introduces or changes product language, lifecycle semantics, or cross-layer domain concepts. Update `CONTEXT.md` inline as terms are resolved.
+4. Use planning kickoff from `docs/template/KICKOFF.md` section 2.
+5. Pull verification tier guidance from `docs/workflow/VERIFY.md`.
+6. Use `skills/spec-workflow-gh.md` only for one-shot issue-body + `gh` generation.
+7. Reflect resolved canonical terms consistently in issue titles, summaries, acceptance criteria, PR descriptions, UI copy, and docs.
 
 ### D) Docs / Architecture / Pattern Maintenance
 
@@ -85,7 +88,7 @@ Detailed implementation/review/verification defaults are split under `docs/workf
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.6.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.7.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Verification Commands
@@ -116,6 +119,7 @@ When a Makefile verification contract exists, prefer canonical targets (`make ve
 - Review defaults and output budget: `docs/workflow/REVIEW.md`
 - Verification tiers and contracts: `docs/workflow/VERIFY.md`
 - Onboarding and mode routing: `AGENTS.md`
+- Product/domain language and glossary: `CONTEXT.md`
 
 ## Skills Governance
 

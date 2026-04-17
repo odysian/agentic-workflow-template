@@ -12,6 +12,7 @@
 - Verification tiers, commands, and gate expectations: `docs/workflow/VERIFY.md`
 - Greenfield structure baseline: `docs/GREENFIELD_BLUEPRINT.md`
 - Onboarding and mode routing entrypoint: `AGENTS.md`
+- Product/domain language and glossary: `CONTEXT.md`
 
 ## How To Use This Split
 
@@ -32,5 +33,5 @@ Former monolithic sections were split into:
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.6.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.7.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
