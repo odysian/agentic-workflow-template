@@ -2,8 +2,8 @@
 
 ## Current Release
 
-- Current baseline tag: `v0.7.0`
-- Scope: root `CONTEXT.md` scaffold, conditional Domain Pass planning checkpoint, concept-primer approval learning handoff, plus the v0.6.0 mode-routed startup, docs topology, workflow split, extracted review prompt file, tiered verification artifacts, and script/path coherence updates.
+- Current baseline tag: `v0.8.0`
+- Scope: optional repo-local planning/review playbooks under `skills/`, template preflight coverage for those files, Skills Governance clarification in `AGENTS.md`, plus all prior baseline scope through v0.7.0.
 
 ## Release History (Short)
 
@@ -14,6 +14,7 @@
 - `v0.5.0`: Execution Brief template; generic analog docs; brief-first execution + delta-only patching in `docs/template/KICKOFF.md`; operator shortcuts.
 - `v0.6.0`: BREAKING docs-path move + mode-routed startup + workflow split + extracted robust review prompt + tiered verification defaults.
 - `v0.7.0`: root `CONTEXT.md` scaffold + conditional Domain Pass planning checkpoint + concept-primer approval learning handoff.
+- `v0.8.0`: optional repo-local planning/review playbooks under `skills/` + preflight coverage + Skills Governance clarification.
 
 ## Ongoing Release Process
 

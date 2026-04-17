@@ -30,6 +30,11 @@ required_paths=(
   "scripts/check-unresolved-template-tokens.sh"
   "scripts/gh_preflight.sh"
   "scripts/create_pr.sh"
+  "skills/domain-pass.md"
+  "skills/grill-plan.md"
+  "skills/design-interface.md"
+  "skills/architecture-audit.md"
+  "skills/tdd-boundaries.md"
 )
 
 required_exec=(

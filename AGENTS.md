@@ -88,7 +88,7 @@ Detailed implementation/review/verification defaults are split under `docs/workf
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.7.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.8.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.
 
 ## Verification Commands
@@ -123,10 +123,11 @@ When a Makefile verification contract exists, prefer canonical targets (`make ve
 
 ## Skills Governance
 
+- `skills/*.md` are optional portable playbooks; they are not runtime-loaded unless your tooling explicitly loads them.
 - Precedence: repo docs -> local `skills/*` -> external installed skills.
+- If a `skills/*.md` playbook conflicts with canonical repo docs, the repo docs win.
 - Install external skills in Codex home, not in project repos.
 - Keep active external skills minimal and non-overlapping.
-- If an external skill conflicts with repo docs, follow repo docs.
 
 ## Optional Later
 
