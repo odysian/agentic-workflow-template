@@ -7,6 +7,7 @@ cd "$ROOT_DIR"
 required_paths=(
   "AGENTS.md"
   "CLAUDE.md"
+  "CONTEXT.md"
   "docs/WORKFLOW.md"
   "docs/ISSUES_WORKFLOW.md"
   "docs/GREENFIELD_BLUEPRINT.md"

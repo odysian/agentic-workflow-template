@@ -41,7 +41,9 @@ Use the delta-only patch handoff in `docs/template/KICKOFF.md` for post-review u
 The lightweight tutoring handoff is generated once, by the approving reviewer, in the same `APPROVED` response.
 
 - Do not generate a second handoff after approval is relayed back.
-- Keep handoff to 4 short bullets + 3-6 code pointers.
+- Five short bullets; first bullet is `Concept primer`.
+- No required code pointers; file references may appear naturally when useful.
+- Use the exact shape from `docs/template/KICKOFF.md` section 4.
 
 ## Related References
 

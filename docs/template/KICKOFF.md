@@ -22,7 +22,7 @@ Short invocations live in `docs/template/KICKOFF_SHORT.md`.
 
 | Situation | Load first | Load only if needed |
 | --- | --- | --- |
-| Planning issue artifacts | `docs/ISSUES_WORKFLOW.md`, this file section 2 | `docs/template/EXECUTION_BRIEF.md`, `docs/analogs/*`, `docs/workflow/VERIFY.md` |
+| Planning issue artifacts | `docs/ISSUES_WORKFLOW.md`, this file section 2 | `CONTEXT.md` (when feature changes product language, lifecycle/state semantics, or cross-layer domain concepts), `docs/template/EXECUTION_BRIEF.md`, `docs/analogs/*`, `docs/workflow/VERIFY.md` |
 | Implement existing Task | Task issue + this file section 1 | `docs/template/EXECUTION_BRIEF.md`, subtree `backend/AGENTS.md` / `frontend/AGENTS.md`, `docs/workflow/IMPLEMENT.md`, `docs/workflow/VERIFY.md` |
 | Review Task PR | Task/PR diff + this file section 3a | section 3b + `.github/prompts/review-task.prompt.md`, subtree `AGENTS` files |
 | Patch after `ACTIONABLE` | this file delta-only block | Execution Brief + analogs (if still relevant) |
@@ -119,6 +119,14 @@ Notes:
 - `mode=gated`: output Spec + default child Task issue artifacts.
 - `mode=fast`: output quick-fix checklist + verification plan; no issue creation by default.
 
+### Domain Pass Prompt (Optional, Planning-Only)
+
+Use when the feature introduces or changes product language, lifecycle semantics, or cross-layer domain concepts:
+
+```text
+Run a Domain Pass on <feature/plan>. Challenge terminology against this repo's current CONTEXT.md and docs, cross-check the code when claims can be verified locally, update CONTEXT.md inline when terms are resolved, and only suggest an ADR if the decision is hard to reverse, surprising without context, and the result of a real trade-off.
+```
+
 ## 3) Review Assets
 
 ### 3a) Standard Reviewer Kickoff Prompt
@@ -159,11 +167,12 @@ Generated once by the approving reviewer in the same `APPROVED` response. Do not
 Use this shape:
 
 ```text
+Learning handoff:
+- Concept primer: <plain-language explanation of the underlying idea before this PR's specifics>
 - What changed: <2-3 sentences max>
 - Why it was done this way: <brief rationale>
-- Tradeoff or pattern worth learning: <one thing to teach>
-- What to review first: <how a junior operator should read the diff>
-
-Code pointers:
-- path:line-line — why it matters
+- Tradeoff or pattern worth learning: <one point>
+- How to review this kind of change: <what a junior operator should inspect first next time>
 ```
+
+File references may appear naturally when useful, but are not required.

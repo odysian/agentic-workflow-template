@@ -12,6 +12,7 @@
 - Verification tiers, commands, and gate expectations: `docs/workflow/VERIFY.md`
 - Greenfield structure baseline: `docs/GREENFIELD_BLUEPRINT.md`
 - Onboarding and mode routing entrypoint: `AGENTS.md`
+- Product/domain language and glossary: `CONTEXT.md`
 
 ## How To Use This Split
 

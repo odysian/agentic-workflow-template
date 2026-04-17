@@ -5,12 +5,14 @@ Use this document for implementation defaults. Issue control-plane rules remain 
 ## Development Loop
 
 1. Whiteboard scope in `plans/YYYY-MM-DD/*.md` when needed.
-2. Confirm execution mode (`single` by default).
-3. Restate goal, non-goals, acceptance criteria, and exact verification commands from the Task.
-4. Implement minimally and surgically.
-5. Run relevant verification once per code change set.
-6. Open PR that closes the Task issue.
-7. Hand off for one reviewer pass (`APPROVED` or `ACTIONABLE`).
+2. For qualifying work, run Domain Pass and update `CONTEXT.md` as terms are resolved (see `docs/ISSUES_WORKFLOW.md` — When Domain Pass Is Required).
+3. Draft/update Spec or Task issue artifacts.
+4. Confirm execution mode (`single` by default).
+5. Restate goal, non-goals, acceptance criteria, and exact verification commands from the Task.
+6. Implement minimally and surgically.
+7. Run relevant verification once per code change set.
+8. Open PR that closes the Task issue.
+9. Hand off for one reviewer pass (`APPROVED` or `ACTIONABLE`).
 
 ## Brief-First Execution
 
