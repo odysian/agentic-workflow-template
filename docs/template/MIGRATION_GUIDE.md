@@ -14,6 +14,32 @@ This guide covers both new-project bootstrap and adoption in existing repositori
 - Workflow helper scripts (`scripts/`)
 - Template integrity checks (`scripts/template_preflight.sh`, `scripts/check-unresolved-template-tokens.sh`)
 - Portable playbooks in `skills/`
+- Lightweight user-wide workflow overlay in `docs/user-wide-workflow/`
+
+## Upgrading From <= 0.8.x
+
+Version `0.9.0` adds a lightweight user-wide workflow overlay for operators who do not
+want to commit repo-specific workflow files in every repository.
+
+### New folder: `docs/user-wide-workflow/`
+
+- `AGENTS.md`, `CLAUDE.md`, `KICKOFFS.md`, `PLANS.md`, and `CONTEXT.template.md` can be copied to `~/.agents/workflow/`.
+- `local-shims/*.template` provide tiny ignored per-repo `AGENTS.md` / `CLAUDE.md` / `CONTEXT.md` files.
+- `WINDOWS_SETUP.md` documents Git Bash setup on Windows work laptops.
+- `PLANS.md` defines personal cross-project planning document conventions.
+
+### Required downstream actions
+
+None. This is an optional overlay.
+
+Use it when:
+
+- you work across many repos
+- you want one personal workflow kernel
+- company/team norms are not ready for committed agent files
+- repo-specific setup can fit in a small local shim
+
+Keep committed project templates as-is when the team wants workflow docs in-repo.
 
 ## Upgrading From <= 0.7.x
 

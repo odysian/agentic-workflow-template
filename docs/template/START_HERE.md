@@ -15,6 +15,21 @@ This folder is the project-agnostic baseline for an agentic workflow.
 6. Confirm verification commands run locally.
 7. Start work through GitHub Issues by default (`single` mode: Task -> PR).
 
+## Lightweight User-Wide Setup
+
+If you prefer a personal workflow that works across many repos without committing
+repo-specific agent files, use `docs/user-wide-workflow/` instead of copying the full
+template into every project.
+
+Recommended shape:
+
+- install `docs/user-wide-workflow/AGENTS.md`, `CLAUDE.md`, `KICKOFFS.md`, `PLANS.md`, and `CONTEXT.template.md` under `~/.agents/workflow/`
+- create tiny local repo shims (`AGENTS.md`, `CLAUDE.md`, optional `CONTEXT.md`)
+- keep shims out of git with `.git/info/exclude`
+- record only local repo facts in the shim: shell, package manager, branch convention, verify commands, manual gates, sensitive files
+
+See `docs/user-wide-workflow/README.md` and `docs/user-wide-workflow/WINDOWS_SETUP.md`.
+
 ## Required Tokens
 
 Replace these in base files:
@@ -50,6 +65,7 @@ In downstream repos, record:
 - Review defaults: `docs/workflow/REVIEW.md`
 - Verification tiers: `docs/workflow/VERIFY.md`
 - Greenfield baseline: `docs/GREENFIELD_BLUEPRINT.md`
+- User-wide lightweight overlay: `docs/user-wide-workflow/`
 
 Default behavior is mode-routed startup via `AGENTS.md`; avoid universal preloading of all workflow docs.
 

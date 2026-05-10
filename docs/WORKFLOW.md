@@ -13,6 +13,7 @@
 - Greenfield structure baseline: `docs/GREENFIELD_BLUEPRINT.md`
 - Onboarding and mode routing entrypoint: `AGENTS.md`
 - Product/domain language and glossary: `CONTEXT.md`
+- Lightweight user-wide overlay: `docs/user-wide-workflow/`
 
 ## How To Use This Split
 
@@ -22,6 +23,12 @@
    - review -> `docs/workflow/REVIEW.md`
    - verification planning/gating -> `docs/workflow/VERIFY.md`
 3. Use `docs/ISSUES_WORKFLOW.md` as the escape hatch whenever mode/lifecycle rules are unclear.
+
+## User-Wide Overlay
+
+Use `docs/user-wide-workflow/` when you want one personal workflow kernel across many
+repos and small local-only shims for per-repo facts. This is an optional alternative to
+copying the full repo-local template into every project.
 
 ## Legacy Section Map
 
@@ -33,5 +40,5 @@ Former monolithic sections were split into:
 
 ## Workflow Metadata
 
-- Template baseline at scaffold time: `agentic-workflow-template v0.8.0`.
+- Template baseline at scaffold time: `agentic-workflow-template v0.9.0`.
 - Downstream repos should record an adoption date (`YYYY-MM-DD`) in repo docs.

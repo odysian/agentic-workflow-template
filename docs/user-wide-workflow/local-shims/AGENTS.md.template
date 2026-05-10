@@ -1,0 +1,23 @@
+# AGENTS.md - Local Repo Shim
+
+@C:/Users/<you>/.agents/workflow/AGENTS.md
+
+This file is local-only. Keep it out of git with `.git/info/exclude`.
+
+## Local Repo Facts
+
+- Shell: Git Bash
+- Work item source:
+- Branch convention:
+- Package manager:
+- Install:
+- Tier 1 verify:
+- Tier 3 verify:
+- Manual gates:
+- Sensitive files:
+- Notes:
+
+## Verification Notes
+
+If verification is incomplete or immature, say so directly. Record the best available
+targeted check and the missing confidence gap instead of inventing a broad gate.

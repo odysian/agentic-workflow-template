@@ -132,3 +132,9 @@ When a Makefile verification contract exists, prefer canonical targets (`make ve
 ## Optional Later
 
 MCP is out of scope for v1 and can be added later for automation.
+
+## User-Wide Overlay
+
+For personal cross-repo usage where repo-specific workflow files should remain local,
+see `docs/user-wide-workflow/`. It provides a user-wide `AGENTS.md` kernel, local shim
+templates, Windows/Git Bash setup notes, and `PLANS.md` planning-doc conventions.

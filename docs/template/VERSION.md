@@ -1,11 +1,18 @@
 # Template Version
 
-Current version: `0.8.0`
+Current version: `0.9.0`
 
 ## Notes
 
 - Use semantic versioning for template evolution.
 - Tag releases as `vMAJOR.MINOR.PATCH`.
+
+### `0.9.0` (2026-05-10)
+
+- Added `docs/user-wide-workflow/` as a lightweight personal workflow overlay.
+- Added user-wide `AGENTS.md`, `CLAUDE.md`, `KICKOFFS.md`, `PLANS.md`, and `CONTEXT.template.md`.
+- Added local shim templates for ignored per-repo `AGENTS.md`, `CLAUDE.md`, and `CONTEXT.md`.
+- Added Windows/Git Bash setup notes for user-wide workflow installation.
 
 ### `0.8.0` (2026-04-17)
 

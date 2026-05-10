@@ -1,0 +1,15 @@
+# CONTEXT.md - Local Domain Notes
+
+This file is optional and local-only unless the team wants domain language committed.
+Use it for product/device/business terms that affect issue titles, specs, acceptance
+criteria, or user-facing copy.
+
+## Language
+
+| Term | Definition |
+| --- | --- |
+| `<Term>` | `<Meaning, boundary, and preferred usage.>` |
+
+## Open Ambiguities
+
+- `<Term>`: `<why it is unclear and what decision is needed.>`
